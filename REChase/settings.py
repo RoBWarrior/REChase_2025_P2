@@ -185,4 +185,4 @@ FINAL_LEVEL = 1
 START_TIME = datetime.strptime(config('START_TIME'), "(%Y, %m, %d, %H, %M, %S, %f)")
 END_TIME = datetime.strptime(config('END_TIME'), "(%Y, %m, %d, %H, %M, %S, %f)")
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
