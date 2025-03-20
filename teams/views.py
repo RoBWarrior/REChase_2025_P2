@@ -32,6 +32,7 @@ def home(request):
     user = request.user
     if not user.is_authenticated:
         # For managing event Wait and Finish
+        print("User is not authenticated")
         context = {}
         if datetime.datetime.now() < settings.START_TIME:
             context = {'wait': 1, 'cur_time': datetime.datetime.now(),

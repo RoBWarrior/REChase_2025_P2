@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
 # ALLOWED_HOSTS = ['.vercel.app', '*']
-ALLOWED_HOSTS = ['arhn.in', 'rechase.arhn.in', 'localhost']
+ALLOWED_HOSTS = ['arhn.in', 'rechase.arhn.in', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -82,23 +82,23 @@ WSGI_APPLICATION = 'REChase.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'REChase2024_db',
-        'USER': 'REChase2024_user',
-        'PASSWORD': 'rechase2024_database@',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'REChase2024_db',
+#         'USER': 'REChase2024_user',
+#         'PASSWORD': 'rechase2024_database@',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -177,7 +177,7 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static1/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
 
 FINAL_LEVEL = 1
@@ -185,4 +185,4 @@ FINAL_LEVEL = 1
 START_TIME = datetime.strptime(config('START_TIME'), "(%Y, %m, %d, %H, %M, %S, %f)")
 END_TIME = datetime.strptime(config('END_TIME'), "(%Y, %m, %d, %H, %M, %S, %f)")
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
