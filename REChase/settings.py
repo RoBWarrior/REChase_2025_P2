@@ -96,11 +96,41 @@ WSGI_APPLICATION = 'REChase.wsgi.application'
 
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
+# Try DATABASE_URL first
+DATABASE_URL = config('DATABASE_URL', default=None)
+
+if not DATABASE_URL:
+    # If no DATABASE_URL, build one from individual vars
+    user = config("POSTGRES_USER")
+    password = config("POSTGRES_PASSWORD")
+    host = config("POSTGRES_HOST")
+    port = config("POSTGRES_PORT")
+    dbname = config("POSTGRES_DB")
+
+    # IMPORTANT: encode password so special chars (@, :, /) won’t break URL
+    from urllib.parse import quote_plus
+    safe_password = quote_plus(password)
+
+    DATABASE_URL = f"postgres://{user}:{safe_password}@{host}:{port}/{dbname}"
+
+# Now parse DATABASE_URL normally
+try:
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=not DEBUG
+        )
+    }
+    print("Postgres is connected successfully")
+except Exception as e:
+    print("Warning: invalid DATABASE_URL — falling back to SQLite. Error:", e)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # DATABASES = {

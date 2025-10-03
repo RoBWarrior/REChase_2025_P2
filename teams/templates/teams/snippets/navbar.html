@@ -35,7 +35,7 @@
 				min-height: 100vh;
 
 				background-color: black;
-				background-image: url("{% static 'teams/images/innoveda2.jpg' %}");
+				background-image: url("{% static 'teams/images/tesseract.jpeg' %}");
 				background-repeat: no-repeat;
 				background-size: cover;
 				background-position: center center; 
@@ -226,7 +226,11 @@
 					<li><a href="{% url 'teams:scoreboard' %}">Leaderboard</a></li>
 					{% endif %} {% if user.is_authenticated %}
 					<li>
-						<a href="{% url 'logout' %}?next={% url 'teams:home' %}">Logout</a>
+						<form method="post" action="{% url 'logout' %}">
+							{% csrf_token %}
+							<input type="hidden" name="next" value="{% url 'teams:home' %}">
+							<button type="submit" class="as-link">Logout</button>
+						</form>
 					</li>
 					{% else %}
 					<li>
