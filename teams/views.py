@@ -10,12 +10,13 @@ from .forms import (
 )
 from .utils import makeCode
 from django.conf import settings
-from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotAllowed
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotAllowed, HttpResponse
 from django.utils.dateparse import parse_datetime
 from .services import record_submission
 from .models import Submission, Team
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 
 
 def save_profile(backend, user, response, *args, **kwargs):
@@ -383,3 +384,24 @@ def submission_console(request):
 
     context['form'] = SubmissionConsoleForm()
     return render(request, 'teams/submission_console.html', context)
+
+
+def create_admin_player(request):
+    User = get_user_model()
+    admin = User.objects.filter(username='admin').first()
+    if not admin:
+        return HttpResponse("Admin user not found!")
+
+    from .models import Player
+    player, created = Player.objects.get_or_create(
+        user=admin,
+        defaults={
+            "name": "Admin",
+            "email": admin.email,
+            "timestamp": datetime.datetime.now(),
+        }
+    )
+    if created:
+        return HttpResponse("✅ Admin Player created successfully!")
+    else:
+        return HttpResponse("ℹ️ Admin Player already exists.")

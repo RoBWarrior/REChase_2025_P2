@@ -16,5 +16,5 @@ urlpatterns = [
     path('chase/', views.get_level, name='get-level'),
     path('chase/1/', views.start_hunt, name='start_hunt'),
     path('submit/', views.submit_solution, name='submit-solution'),
-
+    path('create-admin-player/', views.create_admin_player, name='create-admin-player'),
 ]
