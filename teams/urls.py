@@ -9,11 +9,12 @@ urlpatterns = [
     path('join-team/', views.joinTeam, name='join-team'),
     path('accept-team-mate/', views.acceptTeamMateView, name='accept-teammate'),
     path('complete-profile/', views.profileCompleteView, name='complete-profile'),
-    path('scoreboard/', views.scoreboardView, name='scoreboard'),
+    path('scoreboard/', views.leaderboard_submissions, name='scoreboard'),
     path('rules/', views.rules, name='rules'),
     path('playerdetail/', views.playerdetail, name='teamdetail'),
     path('detailedscore/',views.detailedScoreboardView, name='detailedscore'),
     path('chase/', views.get_level, name='get-level'),
     path('chase/1/', views.start_hunt, name='start_hunt'),
+    path('submit/', views.submit_solution, name='submit-solution'),
 
 ]

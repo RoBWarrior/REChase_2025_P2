@@ -1,15 +1,22 @@
 from django.shortcuts import render, redirect
 from . import models
 import datetime
-from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy, reverse
 from .decorators import team_required
 from .forms import (
     TeamCreationForm,
     ProfileFillForm,
+    SubmissionConsoleForm,
 )
 from .utils import makeCode
 from django.conf import settings
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotAllowed
+from django.utils.dateparse import parse_datetime
+from .services import record_submission
+from .models import Submission, Team
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
+
 
 def save_profile(backend, user, response, *args, **kwargs):
     # print(response)
@@ -318,3 +325,61 @@ def detailedScoreboardView(request):
             )
         context['leveldetail'] = leveldetail
     return render(request, 'teams/detailed_leaderBoard.html', context)
+
+
+def submit_solution(request):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+    team_code = request.POST.get('team_code')
+    if not team_code:
+        return HttpResponseBadRequest('team_code is required')
+
+    device_ts = parse_datetime(request.POST.get('device_ts')) if request.POST.get('device_ts') else None
+    sub = record_submission(team_code, device_ts)
+
+    return JsonResponse({
+        'team': sub.team.name,
+        'team_code': sub.team_code,
+        'questions_solved': sub.level_after,
+        'last_submitted_at': sub.last_submitted_at.isoformat(),
+    })
+
+def leaderboard_submissions(request):
+    qs = Submission.objects.select_related('team').order_by('-level_after', 'last_submitted_at')
+    context = {
+        'qs': qs,
+        'cur_time': datetime.datetime.now(),
+        'start_time': settings.START_TIME,
+    }
+    return render(request, 'teams/leaderBoard.html', context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff or u.is_superuser)
+def submission_console(request):
+    context = {}
+    if request.method == 'POST':
+        form = SubmissionConsoleForm(request.POST)
+
+        if form.is_valid():
+            team_code = form.cleaned_data['team_code'].strip()
+            device_ts_raw = form.cleaned_data.get('device_ts')
+            device_ts = parse_datetime(device_ts_raw) if device_ts_raw else None
+
+            try:
+                sub = record_submission(team_code, device_ts)
+                messages.success(
+                    request,
+                    f"Updated {sub.team.name} to level {sub.level_after}"
+                )
+                return redirect(reverse('submission-console'))
+
+            except Team.DoesNotExist:
+                messages.error(request, "Invalid team code")
+                return redirect(reverse('submission-console'))
+
+        context['form'] = form
+        return render(request, 'teams/submission_console.html', context)
+
+    context['form'] = SubmissionConsoleForm()
+    return render(request, 'teams/submission_console.html', context)

@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.db.models import CharField
 from django.db.models.functions import Lower
 from .models import Team, Player
+from .models import Submission
 
 CharField.register_lookup(Lower)
 
@@ -31,3 +32,11 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Team)
+
+
+
+@admin.register(Submission)
+class SubmissionAdmin(admin.ModelAdmin):
+    list_display = ('team', 'team_code', 'level_after', 'last_submitted_at', 'device_submitted_at')
+    list_filter = ('level_after',)
+    search_fields = ('team__name', 'team_code')

@@ -15,189 +15,512 @@
 
 <style>
 	
-	@import url('https://fonts.cdnfonts.com/css/fast-hand');
-    @import url('https://fonts.googleapis.com/css2?family=Metrophobic&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Niconne&display=swap');
-   
-	/*footer styling */
-	footer {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		background: rgba(1, 2, 3, 0.7);
-		backdrop-filter: blur(5px);
-		height: auto;
-		width: 100vw;
-		font-family: "Open Sans";
-		padding-top: 15px;
-		color: #fff;
-	}
-	
-	.footer-content {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
-		text-align: center;
-	}
-	.footer-content h3 {
-		text-shadow: 0 0 4px #ff0000;
-		font-size: 1.5rem;
+@import url('https://fonts.cdnfonts.com/css/fast-hand');
+@import url('https://fonts.googleapis.com/css2?family=Metrophobic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Niconne&display=swap');
 
-		font-weight: 400;
-		text-transform: capitalize;
-		line-height: 1rem;
-	}
-	.footer-content p {
-		text-shadow: 0 0 4px #ff0000;
-		max-width: 500px;
-		margin: 1px auto;
+/* Global Styles */
+body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
 
-		font-size: 1.5rem;
-	}
-	.socials{
-		list-style: none;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 1rem 0 1rem 0;
-	}
-	.socials li{
-		margin: 0 10px;
-	}
-	.socials a{
-		text-decoration: none;
-		color: #fff;
-	}
-	.socials a i{
-		font-size: 2rem;
-		transition: color .4s ease;
-		margin-left: 1vw;
-		margin-right: 1vw;
+/* Animated Background Effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(233, 121, 87, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(233, 121, 87, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
 
-	}
-	.socials a:hover i{
-		color: white;
-	}
-	.card{
-		border-radius: 8px;
-		border-bottom: solid 2px rgb(212,76,18);
-		box-shadow: 0px 1px 3px 2px #E97957;
-		backdrop-filter: blur(5px);
-		max-height:60vh;
-		overflow-y:scroll;
-		
-	}
-	.card-body{
-		padding : 5px;
-	}
+/* Main Card Container */
+.card {
+    background: rgba(15, 15, 25, 0.85) !important;
+    border-radius: 20px !important;
+    border: 2px solid rgba(233, 121, 87, 0.3) !important;
+    box-shadow: 
+        0 8px 32px rgba(233, 121, 87, 0.15),
+        0 0 60px rgba(233, 121, 87, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(12px) !important;
+    max-height: 70vh;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
 
+.card:hover {
+    box-shadow: 
+        0 12px 48px rgba(233, 121, 87, 0.2),
+        0 0 80px rgba(233, 121, 87, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
 
+.card-body {
+    padding: 30px !important;
+}
 
-	@media (max-width: 600px) {
-		.footer-content p {
-			font-size: 1.2rem;
-		}
-	}
+.card-header {
+    background: transparent !important;
+    border: none !important;
+}
 
-	@media (max-width: 800px) {
-	    .footer-content p {
-		    font-size: 1.3rem;
-	    }
-	}
-	
+/* Custom Scrollbar */
+.card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.card::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #E97957 0%, #d4552f 100%);
+    border-radius: 10px;
+}
+
+.card::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ff8a6b 0%, #E97957 100%);
+}
+
+/* Leaderboard Title */
+.leaderboard {
+    color: #E97957 !important;
+    font-family: 'fast hand', sans-serif !important;
+    letter-spacing: 8px !important;
+    font-size: 42px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    text-shadow: 
+        0 0 20px rgba(233, 121, 87, 0.5),
+        0 0 40px rgba(233, 121, 87, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0 !important;
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 
+            0 0 20px rgba(233, 121, 87, 0.5),
+            0 0 40px rgba(233, 121, 87, 0.3),
+            0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        text-shadow: 
+            0 0 30px rgba(233, 121, 87, 0.7),
+            0 0 60px rgba(233, 121, 87, 0.5),
+            0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Timer and Message Text */
+.card-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+    letter-spacing: 3px !important;
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 18px !important;
+    padding: 20px !important;
+    background: rgba(233, 121, 87, 0.08);
+    border-radius: 12px;
+    border: 1px solid rgba(233, 121, 87, 0.2);
+}
+
+#timer {
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    color: #E97957 !important;
+    text-shadow: 0 0 15px rgba(233, 121, 87, 0.6);
+}
+
+/* Table Styling */
+.table-responsive {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.table {
+    margin-bottom: 0 !important;
+    background: transparent !important;
+}
+
+.table-bordered {
+    border: none !important;
+}
+
+.table thead tr {
+    background: linear-gradient(135deg, #E97957 0%, #d4552f 100%) !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase;
+}
+
+.table thead th {
+    text-align: center !important;
+    padding: 18px 15px !important;
+    border: none !important;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.table tbody tr {
+    background: rgba(20, 20, 35, 0.6) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(233, 121, 87, 0.15) !important;
+}
+
+.table tbody tr:hover {
+    background: rgba(233, 121, 87, 0.15) !important;
+    transform: scale(1.01);
+    box-shadow: 0 4px 12px rgba(233, 121, 87, 0.2);
+}
+
+/* Gold Medal - 1st Place */
+.table tbody tr:first-child {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.25) 0%, rgba(20, 20, 35, 0.7) 100%) !important;
+    border-left: 4px solid #FFD700 !important;
+}
+
+.table tbody tr:first-child:hover {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.35) 0%, rgba(233, 121, 87, 0.2) 100%) !important;
+    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3) !important;
+}
+
+.table tbody tr:first-child td:first-child {
+    color: #FFD700 !important;
+    font-size: 22px !important;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+}
+
+/* Silver Medal - 2nd Place */
+.table tbody tr:nth-child(2) {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.25) 0%, rgba(20, 20, 35, 0.7) 100%) !important;
+    border-left: 4px solid #C0C0C0 !important;
+}
+
+.table tbody tr:nth-child(2):hover {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.35) 0%, rgba(233, 121, 87, 0.2) 100%) !important;
+    box-shadow: 0 4px 16px rgba(192, 192, 192, 0.3) !important;
+}
+
+.table tbody tr:nth-child(2) td:first-child {
+    color: #C0C0C0 !important;
+    font-size: 20px !important;
+    text-shadow: 0 0 12px rgba(192, 192, 192, 0.5);
+}
+
+/* Bronze Medal - 3rd Place */
+.table tbody tr:nth-child(3) {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.25) 0%, rgba(20, 20, 35, 0.7) 100%) !important;
+    border-left: 4px solid #CD7F32 !important;
+}
+
+.table tbody tr:nth-child(3):hover {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.35) 0%, rgba(233, 121, 87, 0.2) 100%) !important;
+    box-shadow: 0 4px 16px rgba(205, 127, 50, 0.3) !important;
+}
+
+.table tbody tr:nth-child(3) td:first-child {
+    color: #CD7F32 !important;
+    font-size: 20px !important;
+    text-shadow: 0 0 12px rgba(205, 127, 50, 0.5);
+}
+
+.table tbody td {
+    text-align: center !important;
+    padding: 16px 15px !important;
+    border: none !important;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px !important;
+    font-weight: 500;
+}
+
+.table tbody td:first-child {
+    font-weight: 700;
+    font-size: 18px !important;
+    color: #E97957;
+    text-shadow: 0 0 10px rgba(233, 121, 87, 0.3);
+}
+
+/* Empty State */
+.table tbody tr td[colspan] {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-style: italic;
+    padding: 40px !important;
+    font-size: 16px !important;
+}
+
+/* Footer Styling */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 15, 0.95) 20%, rgba(10, 10, 15, 0.98) 100%);
+    backdrop-filter: blur(10px);
+    height: auto;
+    width: 100vw;
+    font-family: "Open Sans", sans-serif;
+    padding: 20px 0 15px;
+    color: #fff;
+    border-top: 1px solid rgba(233, 121, 87, 0.2);
+    z-index: 100;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.footer-content h3 {
+    text-shadow: 0 0 8px rgba(233, 121, 87, 0.6);
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 1rem;
+    margin-bottom: 10px;
+}
+
+.footer-content p {
+    text-shadow: none !important;
+    font-family: 'Orbitron', sans-serif !important;
+    letter-spacing: 2px !important;
+    font-size: 14px !important;
+    margin: 5px auto !important;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Social Icons */
+.socials {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0 8px 0;
+    padding: 0;
+}
+
+.socials li {
+    margin: 0 8px;
+}
+
+.socials a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding-left: 10px;
+}
+
+.socials a i {
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.socials a:hover {
+    color: #E97957;
+    transform: translateY(-3px);
+}
+
+.socials a:hover i {
+    filter: drop-shadow(0 0 8px rgba(233, 121, 87, 0.6));
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+    .leaderboard {
+        font-size: 32px !important;
+        letter-spacing: 4px !important;
+    }
+
+    .card-body {
+        padding: 20px !important;
+    }
+
+    .table thead th {
+        font-size: 13px !important;
+        padding: 14px 10px !important;
+    }
+
+    .table tbody td {
+        font-size: 13px !important;
+        padding: 12px 8px !important;
+    }
+
+    #timer {
+        font-size: 24px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .leaderboard {
+        font-size: 28px !important;
+        letter-spacing: 3px !important;
+    }
+
+    .card-text {
+        font-size: 14px !important;
+        padding: 15px !important;
+    }
+
+    #timer {
+        font-size: 20px !important;
+    }
+
+    .footer-content p {
+        font-size: 12px !important;
+    }
+
+    .socials a i {
+        font-size: 20px;
+    }
+}
+
+/* Smooth Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.table tbody tr {
+    animation: fadeIn 0.5s ease-out backwards;
+}
+
+.table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.table tbody tr:nth-child(2) { animation-delay: 0.15s; }
+.table tbody tr:nth-child(3) { animation-delay: 0.2s; }
+.table tbody tr:nth-child(4) { animation-delay: 0.25s; }
+.table tbody tr:nth-child(5) { animation-delay: 0.3s; }
+
+.leaderboard-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.leaderboard-container .card {
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.table td, .table th {
+  text-align: center;
+  vertical-align: middle;
+}
+
 
 </style>
-<div class="card text-center" style="background: rgba(1, 2, 3,0.6); padding: 30px 30px ;">
-  <div class="card-header" >
-  <div class="card-body" style="color: #fff;">
-	
-    <h1 style="color: #E97957 font-family: 'fast hand', sans-serif !important; letter-spacing:5px; font-size:35px;" class=" leaderboard">LEADERBOARD</h1>
-    <br>
-    {% if wait %}
-      <p class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;padding-left: 10px;padding-right: 10px;visibility: visible;">
-        Leaderboard will be active after
-      </p>
-      <p class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;padding-left: 10px;padding-right: 10px;visibility: visible;" id="timer">
-      </p>
-    {% elif wrong %}
-        <h1 style="font-family: 'Orbitron', sans-serif; font-size:30px;">Leaderboard will be available soon</h1>
-    {% else %}
+<div class="leaderboard-container">
+  <div class="card text-center" style="background: rgba(1, 2, 3, 0.6); padding: 30px;">
+    <div class="card-header"></div>
+    <div class="card-body" style="color: #fff;">
+      <h1
+        class="leaderboard"
+        style="color: #E97957; font-family: 'fast hand', sans-serif !important; letter-spacing: 5px; font-size: 35px;"
+      >
+        LEADERBOARD
+      </h1>
 
-    <div class="table-responsive">
-        <table  class="table table-bordered "  style="font-weight:bold;box-shadow: 0px 0px 8px #000">
-            <tr style="background: linear-gradient(315deg, #E97957 0%, #000000 150%);color:#fff;font-size:18px">
+      <br>
 
-               
-                <th style="text-align: center;">Team Name</th>
+      {% if wait %}
+        <p class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;">
+          Leaderboard will be active after
+        </p>
+        <p id="timer" class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;"></p>
+
+      {% elif wrong %}
+        <h1 style="font-family: 'Orbitron', sans-serif; font-size: 30px;">
+          Leaderboard will be available soon
+        </h1>
+
+      {% else %}
+      <div class="table-responsive">
+        <table class="table table-bordered" style="font-weight: bold; box-shadow: 0px 0px 8px #000;">
+          <thead>
+            <tr style="background: linear-gradient(315deg, #E97957 0%, #000000 150%); color: #fff; font-size: 18px;">
+              <th style="text-align: center;">Rank</th>
+              <th style="text-align: center;">Team Name</th>
+              <th style="text-align: center;">Questions Solved</th>
             </tr>
+          </thead>
+
+          <tbody>
             {% for item in qs %}
-            <tr>
-               <td>{{ item.name }}</td>      </td>
-            </tr>
+              <tr style="color:white;">
+                <td>{{ forloop.counter }}</td>
+                <td>{{ item.team.name }}</td>
+                <td>{{ item.level_after }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="3" style="text-align:center; color:white;">No submissions yet.</td>
+              </tr>
             {% endfor %}
+          </tbody>
         </table>
-        </div>
+      </div>
+      {% endif %}
 
-    {% endif %}
-
+    </div>
   </div>
 </div>
-</div>
 
+<!-- Spacer -->
 <div style="height: 100px;"></div>
 
-<footer >
-	<div class="footer-content">
-		<p style="
-		text-shadow: none;
-		font-family: 'Orbitron', sans-serif;
-		letter-spacing: 2px;
-		margin-top:5px;
-	">Developed by: RECursion (Team Aavishkar)</p>
-	</div>
-	<div class="socials">
-	  <li>
-		  
-		<a href="https://www.facebook.com/arhn.nitd" target="blank">
-			<i
-				style="height: 30px; width: auto; border: none"
-				class="fab fa-facebook-square"
-			></i
-		></a>
+<!-- Footer -->
+<footer>
+  <div class="footer-content">
+    <p style="
+      text-shadow: none;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 2px;
+      margin-top: 5px;
+    ">
+      Developed by: RECursion (Team Aavishkar)
+    </p>
+  </div>
 
-		
-		
+  <div class="socials">
+    <li>
+      <a href="https://www.facebook.com/arhn.nitd" target="blank">
+        <i class="fab fa-facebook-square" style="height: 30px; width: auto; border: none"></i>
+      </a>
 
-		<a href="https://www.instagram.com/arhn.nitd/" target="blank">
-			<i
-				style="height: 35px; width: auto; border: none; "
-				class="fab fa-instagram"
-			></i
-		></a>
+      <a href="https://www.instagram.com/arhn.nitd/" target="blank">
+        <i class="fab fa-instagram" style="height: 35px; width: auto; border: none;"></i>
+      </a>
 
-		{% comment %} <a href="https://www.recursionnitd.in/" target="blank"
-			><img
-				style="height: 30px; width: auto; border: none;margin:0px 2.3px;"
-				src="{% static 'teams/images/REC_logo.png' %}"
-		/></a> {% endcomment %}
-
-		
-
-		<a
-				href="https://www.linkedin.com/company/aarohan-nit-durgapur/"
-				target="blank"
-			>
-			<i
-				style="height: 35px; width: auto; border: none"
-				class="fab fa-linkedin"
-			></i
-		></a>
-
-	  </li>
-	</div>
-
+      <a href="https://www.linkedin.com/company/aarohan-nit-durgapur/" target="blank">
+        <i class="fab fa-linkedin" style="height: 35px; width: auto; border: none"></i>
+      </a>
+    </li>
+  </div>
 </footer>
 
 
@@ -234,4 +557,13 @@
 
 	}, 1000);
 	</script>
+
+	<script>
+  const ws = new WebSocket('ws://127.0.0.1:8000/ws/leaderboard/');
+  ws.onmessage = (e) => {
+    const msg = JSON.parse(e.data);
+    // update DOM/refresh leaderboard rows
+    console.log('Leaderboard update', msg);
+  };
+</script>
 {% endblock %}

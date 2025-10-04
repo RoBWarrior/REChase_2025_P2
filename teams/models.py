@@ -80,3 +80,17 @@ class Player(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Submission(models.Model):
+    team = models.OneToOneField('Team', on_delete=models.CASCADE, related_name='submission')
+    team_code = models.CharField(max_length=128, unique=True, db_index=True)
+    level_after = models.PositiveIntegerField(default=0)
+    device_submitted_at = models.DateTimeField(null=True, blank=True)
+    last_submitted_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-level_after', 'last_submitted_at']
+
+    def __str__(self):
+        return f'{self.team.name} L{self.level_after}'

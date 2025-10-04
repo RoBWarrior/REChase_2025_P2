@@ -49,7 +49,8 @@ INSTALLED_APPS = [
 
     # Created apps
     'teams',
-
+    #Created channels
+    'channels',
 
 ]
 
@@ -83,6 +84,27 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'REChase.wsgi.application'
+
+# --- Channels (WebSocket support) ---
+ASGI_APPLICATION = 'REChase.asgi.application'
+
+# In-memory layer for development
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
+# # For production (Redis-based layer):
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [('127.0.0.1', 6379)],
+#         },
+#     },
+# }
+
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

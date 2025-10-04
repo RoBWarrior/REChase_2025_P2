@@ -17,3 +17,7 @@ class ProfileFillForm(forms.ModelForm):
     class Meta:
         model = Player
         fields = ['name', 'phone', 'gender', 'college']
+
+class SubmissionConsoleForm(forms.Form):
+    team_code = forms.CharField(max_length=128, label="Team Code")
+    device_ts = forms.CharField(required=False, widget=forms.HiddenInput())

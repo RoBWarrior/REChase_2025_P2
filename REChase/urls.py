@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from teams import views
 
 urlpatterns = [
+    path('admin/console/submit/', admin.site.admin_view(views.submission_console), name='submission-console'),
     path('admin/', admin.site.urls),
     path('', include('teams.urls')),
     path('auth/', include('django.contrib.auth.urls')),

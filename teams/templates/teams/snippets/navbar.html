@@ -31,160 +31,399 @@
 				box-sizing: border-box;
 				outline: none;
 			}
+
 			body {
 				min-height: 100vh;
-
 				background-color: black;
-				background-image: url("{% static 'teams/images/tesseract.jpeg' %}");
+				background-image: url("{% static 'teams/images/tes2.jpg' %}");
 				background-repeat: no-repeat;
 				background-size: cover;
-				background-position: center center; 
-				font-family: Open sans;
+				background-position: center center;
+				font-family: 'Open Sans', sans-serif;
+				padding-top: 100px;
 			}
 
+			/* Navbar Styling */
 			.navbar {
-				position: fixed top;
+				position: fixed;
+				top: 0;
+				left: 0;
 				width: 100%;
-				z-index: 2;
-				padding: 25px 30px;
-				transition: all 0.3s ease;
+				z-index: 1000;
+				padding: 20px 40px;
+				transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+				{% comment %} background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%);
+				backdrop-filter: blur(10px); {% endcomment %}
+				background: transparent;
 			}
+
 			.navbar.sticky {
-				background: #ff009d59;
-				padding: 10px 0;
-				box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+				background: linear-gradient(135deg, rgba(1, 183, 249, 0.15) 0%, rgba(35, 126, 255, 0.1) 100%);
+				background: black;
+				{% comment %} backdrop-filter: blur(15px); {% endcomment %}
+				padding: 15px 40px;
+				{% comment %} box-shadow: 
+					0 4px 30px rgba(1, 183, 249, 0.15),
+					0 1px 0 rgba(255, 255, 255, 0.05); {% endcomment %}
+				{% comment %} border-bottom: 1px solid rgba(1, 183, 249, 0.2); {% endcomment %}
 			}
+
 			.navbar .content1 {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
+				max-width: 1400px;
+				margin: 0 auto;
 			}
+
+			/* Logo Styling */
+			.navbar .logo {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
 			.navbar .logo a {
-				text-shadow: 0 0 4px #ff009d;
-				color: #fff;
-				font-family: "Share Tech", sans-serif !important;
-				font-size: 30px;
-				font-weight: 600;
-				text-decoration: none;
+				display: inline-flex;
+				align-items: center;
+				transition: all 0.3s ease;
 			}
+
+			.navbar .logo img {
+				transition: all 0.3s ease;
+				filter: drop-shadow(0 0 8px rgba(1, 183, 249, 0.3));
+			}
+
+			.navbar .logo a:hover img {
+				transform: scale(1.05) rotate(5deg);
+				filter: drop-shadow(0 0 15px rgba(1, 183, 249, 0.6));
+			}
+
+			/* Menu List */
 			.navbar .menu-list {
 				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				list-style: none;
 			}
+
 			.menu-list li {
 				list-style: none;
 			}
-			.menu-list li a {
-				color: #fff;
-				padding: 5px;
-				border-radius: 10%;
-				font-family: "Share Tech", sans-serif !important;
-				font-size: 18px;
-				font-weight: 800;
-				margin-left: 25px;
+
+			.menu-list li a,
+			.logout-link {
+				position: relative;
+				color: rgba(255, 255, 255, 0.9);
+				padding: 10px 20px;
+				font-family: 'Share Tech', sans-serif;
+				font-size: 16px;
+				font-weight: 700;
 				text-decoration: none;
-				transition: all 0.3s ease;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				border-radius: 10px;
+				transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+				background: transparent;
+				border: 1px solid transparent;
+				cursor: pointer;
+				display: inline-block;
+				overflow: hidden;
 			}
-			.menu-list li a:hover {
-				border: solid 1px #E97957;
-				box-shadow: 0 0 5px #E97957, 0 0 25px #E97957;
-				border-radius: 9px;
+
+			/* Animated underline effect */
+			.menu-list li a::before,
+			.logout-link::before {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				left: 50%;
+				width: 0;
+				height: 2px;
+				background: linear-gradient(90deg, #01B7F9 0%, #237EFF 100%);
+				transform: translateX(-50%);
+				transition: width 0.3s ease;
 			}
+
+			.menu-list li a:hover::before,
+			.logout-link:hover::before {
+				width: 80%;
+			}
+
+			.menu-list li a:hover,
+			.logout-link:hover {
+				color: #01B7F9;
+				background: rgba(1, 183, 249, 0.05);
+				border: 1px solid rgba(1, 183, 249, 0.4);
+				box-shadow: 
+					0 0 20px rgba(1, 183, 249, 0.3),
+					inset 0 0 20px rgba(1, 183, 249, 0.05);
+				transform: translateY(-2px);
+			}
+
+			.menu-list li a:active,
+			.logout-link:active {
+				transform: translateY(0);
+			}
+
+			/* Username styling - special highlight */
+			.menu-list li:first-child a {
+				background: linear-gradient(135deg, rgba(1, 183, 249, 0.15) 0%, rgba(35, 126, 255, 0.1) 100%);
+				border: 1px solid rgba(1, 183, 249, 0.3);
+				color: #01B7F9;
+				font-weight: 800;
+				text-shadow: 0 0 10px rgba(1, 183, 249, 0.4);
+			}
+
+			.menu-list li:first-child a:hover {
+				background: linear-gradient(135deg, rgba(1, 183, 249, 0.25) 0%, rgba(35, 126, 255, 0.2) 100%);
+				box-shadow: 
+					0 0 25px rgba(1, 183, 249, 0.4),
+					inset 0 0 25px rgba(1, 183, 249, 0.1);
+			}
+
+			/* Logout Form and Button */
+			.logout-form {
+				display: inline;
+				margin: 0;
+				padding: 0;
+			}
+
+			.logout-item {
+				display: inline-flex;
+				align-items: center;
+			}
+
+			.logout-link {
+				background: none;
+				border: 1px solid transparent;
+				line-height: normal;
+				vertical-align: middle;
+			}
+
+			/* Mobile Menu Icon */
 			.icon {
 				color: #fff;
-				font-size: 20px;
+				font-size: 24px;
 				cursor: pointer;
 				display: none;
+				padding: 8px;
+				border-radius: 8px;
+				transition: all 0.3s ease;
+				background: rgba(1, 183, 249, 0.1);
+				border: 1px solid rgba(1, 183, 249, 0.2);
 			}
+
+			.icon:hover {
+				color: #01B7F9;
+				background: rgba(1, 183, 249, 0.2);
+				box-shadow: 0 0 15px rgba(1, 183, 249, 0.3);
+				transform: scale(1.1);
+			}
+
+			.icon.hide {
+				display: none;
+			}
+
 			.menu-list .cancel-btn {
 				position: absolute;
 				right: 30px;
-				top: 20px;
-			}
-			@media (max-width: 1230px) {
-				.content {
-					padding: 0 60px;
-				}
-			}
-			@media (max-width: 1100px) {
-				.content {
-					padding: 0 40px;
-				}
-			}
-			@media (max-width: 900px) {
-				.content {
-					padding: 0 30px;
-				}
-			}
-			@media (max-width: 868px) {
-				.icon {
-					display: block;
-				}
-				.icon.hide {
-					display: none;
-				}
-				.icon:hover {
-					color: #050801;
-				}
-				.navbar .menu-list {
-					position: fixed;
-					height: 100vh;
-					width: 100%;
-					max-width: 400px;
-					left: -100%;
-					top: 0px;
-					display: block;
-					padding: 40px 0;
-					text-align: center;
-					background-color: rgba(0, 0, 0, 0.8);
-					backdrop-filter: blur(5px);
-					/* background-image: linear-gradient(to left, #d1c4c4 0%, #313030 74%); */
-					transition: all 0.3s ease;
-				}
-				.navbar.show .menu-list {
-					left: 0%;
-				}
-				.navbar .menu-list li {
-					margin-top: 45px;
-				}
-				.navbar .menu-list li a {
-					font-size: 23px;
-					margin-left: -100%;
-					transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-				}
-				.navbar.show .menu-list li a {
-					margin-left: 0px;
-				}
-			}
-			@media (max-width: 380px) {
-				.navbar .logo a {
-					font-size: 27px;
-				}
+				top: 25px;
+				font-size: 28px;
 			}
 
-			/*cursor animation*/
+			/* Cursor Animation */
 			.cursor {
 				position: fixed;
-				width: 50px;
-				height: 50px;
-				border: 1px solid #E97957;
-				border-radius: 50%;
-				left: 0;
-				right: 0;
-				pointer-events: none;
-				transform: translate(-50%, -50%);
-				transition: 0.1s;
-			}
-			.cursor2 {
-				position: fixed;
-				width: 8px;
-				height: 8px;
-				background-color: #D63629;
+				width: 40px;
+				height: 40px;
+				border: 2px solid #01B7F9;
 				border-radius: 50%;
 				left: 0;
 				top: 0;
 				pointer-events: none;
 				transform: translate(-50%, -50%);
-				transition: 0.3s;
+				transition: all 0.15s ease;
+				z-index: 9999;
+				mix-blend-mode: screen;
+				opacity: 0.8;
+			}
+
+			.cursor2 {
+				position: fixed;
+				width: 8px;
+				height: 8px;
+				background: linear-gradient(135deg, #01B7F9 0%, #237EFF 100%);
+				border-radius: 50%;
+				left: 0;
+				top: 0;
+				pointer-events: none;
+				transform: translate(-50%, -50%);
+				transition: all 0.1s ease;
+				z-index: 9999;
+				box-shadow: 0 0 10px rgba(1, 183, 249, 0.8);
+			}
+
+			/* Hover states for cursor */
+			a:hover ~ .cursor,
+			button:hover ~ .cursor {
+				transform: translate(-50%, -50%) scale(1.5);
+				border-color: #237EFF;
+				opacity: 1;
+			}
+
+			/* Responsive Design */
+			@media (max-width: 1230px) {
+				.navbar {
+					padding: 20px 60px;
+				}
+				.navbar.sticky {
+					padding: 15px 60px;
+				}
+			}
+
+			@media (max-width: 1100px) {
+				.navbar {
+					padding: 20px 40px;
+				}
+				.navbar.sticky {
+					padding: 15px 40px;
+				}
+			}
+
+			@media (max-width: 900px) {
+				.navbar {
+					padding: 20px 30px;
+				}
+				.navbar.sticky {
+					padding: 15px 30px;
+				}
+			}
+
+			@media (max-width: 868px) {
+				.icon {
+					display: block;
+				}
+
+				.navbar .menu-list {
+					position: fixed;
+					height: 100vh;
+					width: 100%;
+					max-width: 420px;
+					left: -100%;
+					top: 0;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					gap: 20px;
+					padding: 60px 30px;
+					background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(1, 183, 249, 0.1) 100%);
+					backdrop-filter: blur(20px);
+					box-shadow: 4px 0 30px rgba(1, 183, 249, 0.2);
+					border-right: 1px solid rgba(1, 183, 249, 0.3);
+					transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+					overflow-y: auto;
+				}
+
+				.navbar.show .menu-list {
+					left: 0;
+				}
+
+				.navbar .menu-list li {
+					width: 100%;
+					text-align: center;
+					opacity: 0;
+					transform: translateX(-30px);
+					animation: slideInLeft 0.4s ease forwards;
+				}
+
+				.navbar.show .menu-list li {
+					animation: slideInLeft 0.4s ease forwards;
+				}
+
+				.navbar .menu-list li:nth-child(1) { animation-delay: 0.1s; }
+				.navbar .menu-list li:nth-child(2) { animation-delay: 0.2s; }
+				.navbar .menu-list li:nth-child(3) { animation-delay: 0.3s; }
+				.navbar .menu-list li:nth-child(4) { animation-delay: 0.4s; }
+				.navbar .menu-list li:nth-child(5) { animation-delay: 0.5s; }
+
+				@keyframes slideInLeft {
+					to {
+						opacity: 1;
+						transform: translateX(0);
+					}
+				}
+
+				.navbar .menu-list li a,
+				.logout-link {
+					font-size: 20px;
+					padding: 15px 30px;
+					width: 100%;
+					display: block;
+					border: 1px solid rgba(1, 183, 249, 0.2);
+					background: rgba(1, 183, 249, 0.05);
+				}
+
+				.navbar .menu-list li a:hover,
+				.logout-link:hover {
+					transform: scale(1.02);
+				}
+
+				/* Hide cursors on mobile */
+				.cursor,
+				.cursor2 {
+					display: none;
+				}
+			}
+
+			@media (max-width: 420px) {
+				.navbar .menu-list {
+					max-width: 100%;
+				}
+			}
+
+			@media (max-width: 380px) {
+				.navbar .logo img {
+					height: 40px !important;
+					width: auto !important;
+				}
+
+				.navbar {
+					padding: 15px 20px;
+				}
+
+				.navbar.sticky {
+					padding: 12px 20px;
+				}
+			}
+
+			/* Smooth scroll behavior */
+			html {
+				scroll-behavior: smooth;
+			}
+
+			/* Prevent body scroll when menu is open */
+			body.disabled {
+				overflow: hidden;
+			}
+
+			/* Add subtle glow effect to navbar on scroll */
+			@keyframes navbarGlow {
+				0%, 100% {
+					box-shadow: 
+						0 4px 30px rgba(1, 183, 249, 0.15),
+						0 1px 0 rgba(255, 255, 255, 0.05);
+				}
+				50% {
+					box-shadow: 
+						0 4px 35px rgba(1, 183, 249, 0.25),
+						0 1px 0 rgba(255, 255, 255, 0.08);
+				}
+			}
+
+			.navbar.sticky {
+				animation: navbarGlow 3s ease-in-out infinite;
 			}
 		</style>
 	</head>
@@ -225,11 +464,11 @@
 					<li><a href="{% url 'teams:rules' %}">Rules</a></li>
 					<li><a href="{% url 'teams:scoreboard' %}">Leaderboard</a></li>
 					{% endif %} {% if user.is_authenticated %}
-					<li>
-						<form method="post" action="{% url 'logout' %}">
+					<li class="logout-item">
+						<form method="post" action="{% url 'logout' %}" class="logout-form">
 							{% csrf_token %}
 							<input type="hidden" name="next" value="{% url 'teams:home' %}">
-							<button type="submit" class="as-link">Logout</button>
+							<button type="submit" class="logout-link">Logout</button>
 						</form>
 					</li>
 					{% else %}
