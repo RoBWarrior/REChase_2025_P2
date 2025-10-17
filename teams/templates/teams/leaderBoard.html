@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto:wght@100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 	
@@ -242,11 +243,12 @@ body::before {
 }
 
 .table tbody td {
+    font-family: 'Rajdhani', sans-serif !important;
     text-align: center !important;
     padding: 16px 15px !important;
     border: none !important;
     font-family: 'Roboto', sans-serif;
-    font-size: 15px !important;
+    font-size: 20px !important;
     font-weight: 500;
 }
 
@@ -670,31 +672,29 @@ footer {
 .table tbody tr:nth-child(5) { animation-delay: 0.3s; }
 
 </style>
-<div class="leaderboard-container">
-  <div class="card text-center" style="background: rgba(1, 2, 3, 0.6); padding: 30px;">
-    <div class="card-header"></div>
-    <div class="card-body" style="color: #fff;">
-      <h1
-        class="leaderboard"
-        style="color: #E97957; font-family: 'fast hand', sans-serif !important; letter-spacing: 5px; font-size: 35px;"
-      >
-        LEADERBOARD
+<div class="leaderboard-container" style="padding: 20px;">
+  <div class="card-body text-center" style="color: #fff;">
+    <h1
+      class="leaderboard"
+      style="color: #E97957; font-family: 'fast hand', sans-serif !important; letter-spacing: 5px; font-size: 35px;"
+    >
+      LEADERBOARD
+    </h1>
+
+    <br>
+
+    {% if wait %}
+      <p class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;">
+        Leaderboard will be active after
+      </p>
+      <p id="timer" class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;"></p>
+
+    {% elif wrong %}
+      <h1 style="font-family: 'Orbitron', sans-serif; font-size: 30px;">
+        Leaderboard will be available soon
       </h1>
 
-      <br>
-
-      {% if wait %}
-        <p class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;">
-          Leaderboard will be active after
-        </p>
-        <p id="timer" class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;"></p>
-
-      {% elif wrong %}
-        <h1 style="font-family: 'Orbitron', sans-serif; font-size: 30px;">
-          Leaderboard will be available soon
-        </h1>
-
-      {% else %}
+    {% else %}
       <div class="table-responsive">
         <table class="table table-bordered" style="font-weight: bold; box-shadow: 0px 0px 8px #000;">
           <thead>
@@ -704,7 +704,6 @@ footer {
               <th style="text-align: center;">Questions Solved</th>
             </tr>
           </thead>
-
           <tbody>
             {% for item in qs %}
               <tr style="color:white;">
@@ -720,9 +719,7 @@ footer {
           </tbody>
         </table>
       </div>
-      {% endif %}
-
-    </div>
+    {% endif %}
   </div>
 </div>
 
@@ -759,47 +756,35 @@ footer {
   </div>
 </footer>
 
+<script>
+  var countDownDate = new Date({{ start_time|date:"U" }} * 1000);  
+  var now = new Date({{ cur_time|date:"U" }} * 1000);
+  var distance = countDownDate - now;
+
+  var x = setInterval(function() {
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("timer").innerHTML = '<a style="text-decoration: none; color:white" href="{% url "teams:get-level" %}"> REChase is LIVE now !!</a>';
+      location.reload();
+    }
+
+    distance -= 1000;
+  }, 1000);
+</script>
 
 <script>
-	var countDownDate = new Date({{ start_time|date:"U" }} * 1000);  
-	var now = new Date({{ cur_time|date:"U" }} * 1000);
-	var increment = 1000;
-	
-	var distance = countDownDate - now;
-	var days = 0;
-	var hours = 0;
-	var minutes = 0;
-	var seconds = 0;
-
-	var x = setInterval(function() {
-	
-	  days = Math.floor(distance / (1000 * 60 * 60 * 24));
-	  hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-	  minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-	  seconds = Math.floor((distance % (1000 * 60)) / 1000);
-	
-	  document.getElementById("timer").innerHTML = days + "d " + hours + "h "
-	  + minutes + "m " + seconds + "s ";
-	
-	  if (distance < 0) {
-		clearInterval(x);
-		document.getElementById("timer").innerHTML = '<a style="text-decoration: none; color:white" href="{% url "teams:get-level" %}"> REChase is LIVE now !!</a>';
-		location.reload();
-	  }
-
-	  distance-=1000;
-
-	//   console.log(distance,seconds)
-
-	}, 1000);
-	</script>
-
-	<script>
   const ws = new WebSocket('ws://127.0.0.1:8000/ws/leaderboard/');
   ws.onmessage = (e) => {
     const msg = JSON.parse(e.data);
-    // update DOM/refresh leaderboard rows
     console.log('Leaderboard update', msg);
   };
 </script>
+
 {% endblock %}

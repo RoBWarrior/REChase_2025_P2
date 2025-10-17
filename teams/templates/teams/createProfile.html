@@ -1,222 +1,548 @@
-{% extends 'teams/base_bootstrap.html' %}
-{% load crispy_forms_field %}
-{% block title %}
-    Complete profile
-{% endblock %}
-
-{% block content %}
-
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Profile - REChase</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .container {
-            padding-top: 5vh;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        @import url(//db.onlinewebfonts.com/c/f3258385782c4c96aa24fe8b5d5f9782?family=Old+English+Text+MT);
 
-        }
-
-        .container .box {
-            /* backdrop-filter: blur(5px); */
-            position: relative;
-            width: 500px;
-            height: 400px;
-            color: #010203;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /*webkit-box-reflect:below 15px linear-gradient(transparent,transparent,rgba(0,0,0,.2));*/
-        }
-
-        /* .container .box:hover{
-
-        } */
-        .container .box:before {
-            background: rgba(1, 2, 3, 0.6);
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 110%;
-            /* border:4px solid #fff;
-            background:rgba(225,225,225,.1);
-            filter: url(#wavy); */
-            border: 4px groove transparent;
-            border-radius: 5%;
-        }
-
-        .container .box .content {
-            position: absolute;
-            text-align: center;
-            transition: 0.5s;
-        }
-
-        .container .box:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 100%;
-            /* border: 4px solid #fff;
-            background:rgba(225,225,225,.1);
-            border-right: none;
-            filter: url(#wavy); */
-        }
-
-        .container .box h1 {
-            font-family: 'MedievalSharp', cursive;
-            font-size: 4rem;
-            font-weight: bold;
-            color: #fff;
-
-        }
-
-        .container .box p {
-            color: #fff
-        }
-
-        .container .box .form {
-            margin-top: 2rem;
-        }
-
-        input[type=submit] {
-            background: -webkit-gradient(linear, left bottom, left top, from(#000000), to(#262626));
-            background: -webkit-linear-gradient(bottom, #000000, #262626);
-            background: -moz-linear-gradient(bottom, #000000, #262626);
-            background: -o-linear-gradient(bottom, #000000, #262626);
-            background: linear-gradient(0deg, #000000, #262626);
-            color: blue; backdrop-filter: blur(10 px); padding: 25 px 105 px; border: none; border-radius: 10 px; cursor: pointer; box-shadow: 0 0 1 rem 0 rgba(0, 0, 0, .4);
-
-        }
-
-        input[type=text], select, textarea {
-            width: 14em;
-            padding: 8px;
-            border: 2px solid #fff;
-            border-radius: 10px;
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            margin-top: 6px;
-            margin-bottom: 16px;
-            resize: vertical;
-
-            color: #fff;
-            background: -webkit-gradient(linear, left bottom, left top, from(#000000), to(#262626));
-            background: -webkit-linear-gradient(bottom, #000000, #262626);
-            background: -moz-linear-gradient(bottom, #000000, #262626);
-            background: -o-linear-gradient(bottom, #000000, #262626);
-            background: linear-gradient(0deg, #000000, #262626);
-            backdrop-filter: blur(10px);
         }
 
-        @media only screen and (max-width: 600px) {
-            .container {
-                padding-top: 100px;
-            }
-
-            .container .box {
-                width: 90% !important;
-
-            }
-
-            .container .box .content {
-                font-size: 15px;
-
-            }
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Metrophobic&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Niconne&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron&display=swap');
-
-
-        .main-wrapper {
-            position: absolute;
-            margin-top: 100px;
+        /* Rain Animation Background */
+        .rain {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            left: 0 !important;
-            top: 0 !important;
-
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.2;
+            background: repeating-linear-gradient(
+                transparent,
+                transparent 2px,
+                rgba(233, 121, 87, 0.03) 2px,
+                rgba(233, 121, 87, 0.03) 4px
+            );
+            animation: rainFall 0.5s linear infinite;
         }
 
+        @keyframes rainFall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
 
-        @media (max-width: 500px) {
-            .main-wrapper {
-                margin-top: 70px;
+        /* Animated Background Particles */
+        .particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: rgba(233, 121, 87, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 8s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% { 
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
             }
         }
 
-        #id_gender .female {
-            background-color: black;
-            background: linear-gradient(0deg, #000000, #262626);
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #E97957;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            opacity: 0.6;
+        }
+
+        .cursor2 {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #E97957 0%, #D63629 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+            z-index: 9999;
+            box-shadow: 0 0 10px rgba(233, 121, 87, 0.8);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Form Card */
+        .form-card {
+            background: rgba(15, 15, 25, 0.9);
+            border-radius: 20px;
+            border: 2px solid rgba(233, 121, 87, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(233, 121, 87, 0.2),
+                0 0 60px rgba(233, 121, 87, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            padding: 50px 45px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #E97957, #D63629, #E97957);
+            border-radius: 20px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+        }
+
+        .form-card:hover::before {
+            opacity: 0;
+        }
+
+        .form-card:hover {
+            box-shadow: 
+                0 12px 48px rgba(233, 121, 87, 0.3),
+                0 0 80px rgba(233, 121, 87, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transform: translateY(-5px);
+            border-color: rgba(233, 121, 87, 0.5);
+        }
+
+        /* Header */
+        .form-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .form-header h1 {
+            font-family: 'Old English Text MT', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 
+                0 0 20px rgba(233, 121, 87, 0.6),
+                0 0 40px rgba(233, 121, 87, 0.4),
+                0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 12px;
+            letter-spacing: 3px;
+            animation: titleGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 
+                    0 0 20px rgba(233, 121, 87, 0.6),
+                    0 0 40px rgba(233, 121, 87, 0.4),
+                    0 4px 8px rgba(0, 0, 0, 0.5);
+            }
+            50% {
+                text-shadow: 
+                    0 0 30px rgba(233, 121, 87, 0.8),
+                    0 0 60px rgba(233, 121, 87, 0.5),
+                    0 4px 8px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        .form-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 28px;
         }
 
         label {
-            font-size: 16.5px;
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .form-group:focus-within label {
+            color: #E97957;
+            text-shadow: 0 0 10px rgba(233, 121, 87, 0.5);
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 15px;
+            font-family: 'Orbitron', sans-serif;
+            border: 2px solid rgba(233, 121, 87, 0.3);
+            border-radius: 12px;
+            background: rgba(10, 10, 15, 0.6);
+            color: #fff;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #E97957;
+            background: rgba(10, 10, 15, 0.8);
+            box-shadow: 
+                0 0 20px rgba(233, 121, 87, 0.3),
+                0 0 40px rgba(233, 121, 87, 0.1),
+                inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="text"]:hover,
+        select:hover {
+            border-color: rgba(233, 121, 87, 0.5);
+            background: rgba(10, 10, 15, 0.7);
+        }
+
+        /* Select Styling */
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23E97957' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 45px;
+        }
+
+        select option {
+            background: rgba(10, 10, 15, 0.95);
+            color: #fff;
+            padding: 12px;
+        }
+
+        /* Submit Button */
+        .submit-btn,
+        input[type="submit"] {
+            width: 100%;
+            padding: 16px;
+            font-size: 15px;
+            font-weight: 700;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #E97957 0%, #D63629 100%);
+            border: 2px solid rgba(233, 121, 87, 0.5);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 4px 15px rgba(233, 121, 87, 0.4),
+                0 0 30px rgba(233, 121, 87, 0.2);
+            margin-top: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 8px 25px rgba(233, 121, 87, 0.6),
+                0 0 50px rgba(233, 121, 87, 0.3);
+            border-color: #E97957;
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Validation States */
+        input:invalid:not(:placeholder-shown) {
+            border-color: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+        }
+
+        input:valid:not(:placeholder-shown) {
+            border-color: #FF8D30FF;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 40px 35px;
+            }
+
+            .form-header h1 {
+                font-size: 40px;
+            }
+
+            .cursor, .cursor2 {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .form-card {
+                padding: 35px 25px;
+            }
+
+            .form-header h1 {
+                font-size: 36px;
+                letter-spacing: 2px;
+            }
+
+            .form-header p {
+                font-size: 12px;
+                letter-spacing: 2px;
+            }
+
+            .form-group {
+                margin-bottom: 24px;
+            }
+
+            label {
+                font-size: 12px;
+            }
+
+            input[type="text"],
+            select {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .submit-btn {
+                padding: 14px;
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .form-header h1 {
+                font-size: 32px;
+            }
         }
     </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="rain"></div>
+    
+    <!-- Custom Cursors -->
+    <div class="cursor"></div>
+    <div class="cursor2"></div>
 
     <div class="container">
-
-        <div class="box">
-            <div class="content">
-
-                <form method="POST">{% csrf_token %}
-                    <p style="font-size: 2rem;margin-top:50px; color: white;font-family: 'Orbitron', sans-serif;" class="text-center">
-                        Complete your
-                        profile.</p>
-
-                    <table style="color: white; margin: auto;padding: 10px;">
-                        <table style="color: white; margin: auto;padding: 10px;">
-                            <tbody>
-                            <tr>
-                                <th><label for="id_name">Name:</label></th>
-                                <td><input type="text" name="name" maxlength="128" required="" id="id_name"></td>
-                            </tr>
-                            <tr>
-                                <th><label for="id_phone">Phone:</label></th>
-                                <td><input type="text" name="phone" maxlength="13" minlength="10" pattern="\d{10}" required=""
-                                           id="id_phone"></td>
-                            </tr>
-                            <tr>
-                                <th><label for="id_gender">Gender:</label></th>
-                                <td><select name="gender" id="id_gender">
-                                    <option value="M" selected="" style="background:black">Male</option>
-
-                                    <option value="F" style="background:black">Female</option>
-
-                                    <option value="O" style="background:black"> Others</option>
-
-                                </select></td>
-                            </tr>
-                            <tr>
-                                <th><label for="id_college">Institute: </label></th>
-                                <td><input type="text" name="college" value="NIT Durgapur" maxlength="128" required=""
-                                           id="id_college"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </table>
-
-                    </p>
-                    <input class="btn btn-primary"
-                           style="color: #fff;padding:5px;height:40px;width:100px;border: 2px solid #fff;font-family: 'Orbitron', sans-serif;"
-                           type="submit" value="Save">
-                    </p>
-                </form>
-
+        <div class="form-card">
+            <div class="form-header">
+                <h1>Complete Profile</h1>
+                <p>Join the REChase</p>
             </div>
+
+            <form method="POST">
+                <!-- CSRF Token placeholder - Django will handle this -->
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_name">Name</label>
+                    <input 
+                        type="text" 
+                        name="name" 
+                        id="id_name" 
+                        maxlength="128" 
+                        required 
+                        placeholder="Enter your full name"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="id_phone">Phone</label>
+                    <input 
+                        type="text" 
+                        name="phone" 
+                        id="id_phone" 
+                        maxlength="13" 
+                        minlength="10" 
+                        pattern="\d{10}" 
+                        required 
+                        placeholder="10-digit number"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="id_gender">Gender</label>
+                    <select name="gender" id="id_gender">
+                        <option value="M" selected>Male</option>
+                        <option value="F">Female</option>
+                        <option value="O">Others</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_college">Institute</label>
+                    <input 
+                        type="text" 
+                        name="college" 
+                        id="id_college" 
+                        value="NIT Durgapur" 
+                        maxlength="128" 
+                        required
+                    >
+                </div>
+
+                <input 
+                    type="submit" 
+                    class="submit-btn" 
+                    value="Save"
+                >
+            </form>
         </div>
     </div>
 
+    <!-- Floating Particles -->
+    <script>
+        // Create floating particles
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            document.body.appendChild(particle);
+        }
 
-{% endblock %}
+        // Custom cursor effect
+        const cursor = document.querySelector('.cursor');
+        const cursor2 = document.querySelector('.cursor2');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursor2.style.left = e.clientX + 'px';
+            cursor2.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            cursor2.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            cursor2.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+
+        // Interactive input effects
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('mouseenter', () => {
+                cursor.style.width = '60px';
+                cursor.style.height = '60px';
+                cursor.style.borderColor = '#E97957';
+            });
+            input.addEventListener('mouseleave', () => {
+                cursor.style.width = '40px';
+                cursor.style.height = '40px';
+            });
+        });
+
+        const button = document.querySelector('.submit-btn');
+        button.addEventListener('mouseenter', () => {
+            cursor.style.width = '70px';
+            cursor.style.height = '70px';
+            cursor.style.borderWidth = '3px';
+        });
+        button.addEventListener('mouseleave', () => {
+            cursor.style.width = '40px';
+            cursor.style.height = '40px';
+            cursor.style.borderWidth = '2px';
+        });
+    </script>
+</body>
+</html>

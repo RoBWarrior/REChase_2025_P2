@@ -3,383 +3,655 @@
 {% load static %}
 {% block content %}
 
-
-
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/d43543296f.js" crossorigin="anonymous"></script>
 
-
-
 <style>
-  
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@import url('https://fonts.cdnfonts.com/css/fast-hand');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 
-  @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
-  @import url('https://fonts.cdnfonts.com/css/fast-hand');
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
-    a:link {
-      color: green;
-      background-color: transparent;
-      text-decoration: none;
-    }
-    a:visited {
-      color: rgb(252, 0, 42);
-      background-color: transparent;
-      text-decoration: none;
-    }
-    a:hover {
-      color: red;
-      background-color: transparent;
-      text-decoration: underline;
-    }
-    a:active {
-      color: rgb(0, 255, 85);
-      background-color: transparent;
-      text-decoration: underline;
-    }
+/* Global Styles */
+body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    padding-bottom: 140px;
+}
 
-    /*footer styling */
-		footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(1, 2, 3, 0.7);
-		  backdrop-filter: blur(5px);
-      height: auto;
-      width: 100vw;
-      font-family: "Open Sans";
-      padding-top: 15px;
-      color: #fff;
-    }
-    .footer-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-    }
-    .footer-content h3 {
-      text-shadow: 0 0 4px #ffff00;
-      font-size: 1.5rem;
-  
-      font-weight: 400;
-      text-transform: capitalize;
-      line-height: 1rem;
-    }
-    .footer-content p {
-      text-shadow: 0 0 4px #ff0000;
-      max-width: 500px;
-      margin: 1px auto;
-  
-      font-size: 1.5rem;
-    }
-	.socials{
-		list-style: none;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 1rem 0 1rem 0;
-	}
-	.socials li{
-		margin: 0 10px;
-	}
-	.socials a{
-		text-decoration: none;
-		color: #fff;
-	}
-	.socials a i{
-		font-size: 2rem;
-		transition: color .4s ease;
-		margin-left: 1vw;
-		margin-right: 1vw;
+/* Link Styles */
+a:link {
+    color: #E97957;
+    background-color: transparent;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
 
-	}
-	.socials a:hover i{
-		color: white;
-	}
+a:visited {
+    color: #ff8a6b;
+    background-color: transparent;
+    text-decoration: none;
+}
 
+a:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+    text-shadow: 0 0 15px rgba(233, 121, 87, 0.6);
+}
 
-  .join_grp_img{
-    border: none;
+a:active {
+    color: #E97957;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+/* Rain Animation */
+.rain {
+    background-image: url("{% static 'teams/images/rain.png' %}");
+    animation: rain 10s linear infinite;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-  }
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
+}
 
-  .qr_container{
-    padding: 1em;
+@keyframes rain {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 20% 100%;
+    }
+}
+
+/* Main Card Container */
+.card {
+    background: rgba(15, 15, 25, 0.85) !important;
+    border-radius: 20px !important;
+    border: 2px solid rgba(233, 121, 87, 0.3) !important;
+    box-shadow: 
+        0 8px 32px rgba(233, 121, 87, 0.15),
+        0 0 60px rgba(233, 121, 87, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(15px);
+    margin: 30px auto !important;
+    max-width: 1200px !important;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.card:hover {
+    box-shadow: 
+        0 12px 48px rgba(233, 121, 87, 0.2),
+        0 0 80px rgba(233, 121, 87, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    transform: translateY(-2px);
+}
+
+.card.text-center {
+    padding: 40px 50px !important;
+}
+
+/* Card Header */
+.card-header {
+    background: transparent !important;
+    border: none !important;
+    padding-bottom: 30px !important;
+}
+
+.card-header h1 {
+    color: white !important;
+    font-family: 'Audiowide', sans-serif !important;
+    font-size: 3rem !important;
+    text-shadow: 
+        0 0 20px rgba(233, 121, 87, 0.6),
+        0 0 40px rgba(233, 121, 87, 0.4) !important;
+    letter-spacing: 4px;
+    margin-bottom: 0;
+    animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 
+            0 0 20px rgba(233, 121, 87, 0.6),
+            0 0 40px rgba(233, 121, 87, 0.4);
+    }
+    50% {
+        text-shadow: 
+            0 0 30px rgba(233, 121, 87, 0.8),
+            0 0 60px rgba(233, 121, 87, 0.5);
+    }
+}
+
+/* Timer & Status Display */
+.card-text {
+    color: white !important;
+    letter-spacing: 3px !important;
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 26px !important;
+    font-weight: 600 !important;
+    padding: 25px 40px !important;
+    background: rgba(233, 121, 87, 0.12);
+    border: 2px solid rgba(233, 121, 87, 0.4);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 
+        0 8px 32px rgba(233, 121, 87, 0.25),
+        inset 0 2px 8px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    margin: 20px 0 !important;
+    animation: statusPulse 2.5s ease-in-out infinite;
+}
+
+#timer {
+    font-weight: 700 !important;
+    color: #E97957 !important;
+    font-size: 36px !important;
+    text-shadow: 
+        0 0 20px rgba(233, 121, 87, 0.8),
+        0 0 40px rgba(233, 121, 87, 0.4) !important;
+    letter-spacing: 4px !important;
+}
+
+@keyframes statusPulse {
+    0%, 100% {
+        box-shadow: 
+            0 8px 32px rgba(233, 121, 87, 0.25),
+            inset 0 2px 8px rgba(255, 255, 255, 0.05);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 
+            0 12px 40px rgba(233, 121, 87, 0.35),
+            inset 0 2px 10px rgba(255, 255, 255, 0.08);
+        transform: scale(1.02);
+    }
+}
+
+/* WhatsApp Join Section */
+.join_heading {
+    font-size: 2.5rem !important;
+    color: #E97957 !important;
+    font-family: 'Audiowide', sans-serif !important;
+    text-shadow: 0 0 20px rgba(233, 121, 87, 0.5);
+    margin: 30px 0 25px 0 !important;
+    letter-spacing: 2px;
+}
+
+.join_container {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.join_container a {
+    padding: 18px 30px;
     color: white;
-    background: transparent;
+    background: rgba(233, 121, 87, 0.15);
     text-decoration: none;
     font-weight: 800;
-    border-radius: 10px;
+    border-radius: 12px;
+    font-size: 1.3em;
+    font-family: 'Orbitron', sans-serif;
+    border: 2px solid rgba(233, 121, 87, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.join_container a:hover {
+    border: solid 2px #E97957;
+    box-shadow: 0 0 25px rgba(233, 121, 87, 0.6), 0 0 50px rgba(233, 121, 87, 0.3);
+    background: rgba(233, 121, 87, 0.25);
+    transform: translateY(-3px);
+}
+
+.qr_container {
+    padding: 20px;
+    color: white;
+    background: rgba(233, 121, 87, 0.1);
+    text-decoration: none;
+    font-weight: 800;
+    border-radius: 12px;
     font-size: 1.2em;
-    border: 1px solid white;
+    font-family: 'Orbitron', sans-serif;
+    border: 2px solid rgba(233, 121, 87, 0.4);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 15%;
-    margin-left: 5rem;
-  }
+    min-width: 200px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
 
-  .join_heading{
-    font-size: 3rem;
-    color:#E97957;
-  }
+.qr_container:hover {
+    border: solid 2px #E97957;
+    box-shadow: 0 0 25px rgba(233, 121, 87, 0.6), 0 0 50px rgba(233, 121, 87, 0.3);
+    transform: translateY(-3px);
+}
 
-  .join_container{
-    margin-top: 3rem;
-  }
+.join_grp_img {
+    border: 2px solid rgba(233, 121, 87, 0.3);
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
 
-  .join_container a:hover{
-    
-      border: solid 1px #E97957;
-      box-shadow: 0 0 5px #E97957, 0 0 25px #E97957;
-      border-radius: 9px;
-  
-  }
+.qr_container:hover .join_grp_img {
+    border-color: #E97957;
+    box-shadow: 0 0 15px rgba(233, 121, 87, 0.4);
+}
 
+/* Play Button */
+.card-text a[href*="get-level"] {
+    padding: 12px 30px !important;
+    color: white !important;
+    background: linear-gradient(135deg, #E97957 0%, #D63629 100%) !important;
+    text-decoration: none !important;
+    font-weight: 800 !important;
+    border-radius: 12px !important;
+    display: inline-block !important;
+    font-size: 1.2em !important;
+    box-shadow: 0 8px 20px rgba(233, 121, 87, 0.4);
+    transition: all 0.3s ease !important;
+    text-shadow: none !important;
+    border: 2px solid transparent !important;
+}
 
+.card-text a[href*="get-level"]:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 12px 30px rgba(233, 121, 87, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
 
-  @media (max-width: 800px) {
-    .footer-content p {
-      font-size: 1.3rem;
+/* Team Request Section */
+.card-header h2 {
+    color: white !important;
+    font-family: 'Audiowide', sans-serif !important;
+    font-size: 2rem !important;
+    text-shadow: 0 0 15px rgba(233, 121, 87, 0.5);
+    margin: 30px 0 20px 0 !important;
+    letter-spacing: 2px;
+}
+
+.card-header h3 {
+    color: white !important;
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 1.3rem !important;
+    margin: 15px 0 !important;
+    padding: 20px !important;
+    background: rgba(233, 121, 87, 0.08);
+    border: 1px solid rgba(233, 121, 87, 0.3);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+}
+
+/* Form Inputs */
+input[type=submit] {
+    background: linear-gradient(135deg, #E97957 0%, #D63629 100%) !important;
+    backdrop-filter: blur(10px);
+    padding: 10px 25px !important;
+    border: 2px solid transparent !important;
+    border-radius: 8px !important;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(233, 121, 87, 0.3);
+    color: white !important;
+    font-family: 'Orbitron', sans-serif !important;
+    font-weight: 600 !important;
+    margin: 0 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+input[type=submit]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(233, 121, 87, 0.5);
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Team Info Grid */
+.row {
+    margin-top: 30px !important;
+}
+
+.col-lg-6 h2 {
+    color: white !important;
+    font-family: 'Audiowide', sans-serif !important;
+    font-size: 1.8rem !important;
+    text-shadow: 0 0 15px rgba(233, 121, 87, 0.4);
+    margin-bottom: 20px !important;
+    letter-spacing: 2px;
+}
+
+.col-lg-6 {
+    padding: 25px !important;
+    background: rgba(233, 121, 87, 0.05);
+    border: 1px solid rgba(233, 121, 87, 0.2);
+    border-radius: 12px;
+    margin-bottom: 20px !important;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+.col-lg-6:hover {
+    background: rgba(233, 121, 87, 0.1);
+    border-color: rgba(233, 121, 87, 0.4);
+    box-shadow: 0 8px 25px rgba(233, 121, 87, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 15, 0.95) 20%, rgba(10, 10, 15, 0.98) 100%);
+    backdrop-filter: blur(10px);
+    height: auto;
+    width: 100vw;
+    font-family: 'Open Sans', sans-serif;
+    padding: 20px 0 15px;
+    color: #fff;
+    border-top: 1px solid rgba(233, 121, 87, 0.2);
+    z-index: 100;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.footer-content h3 {
+    text-shadow: 0 0 8px rgba(233, 121, 87, 0.6);
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 1rem;
+    margin-bottom: 10px;
+}
+
+.footer-content p {
+    text-shadow: none !important;
+    font-family: 'Orbitron', sans-serif !important;
+    letter-spacing: 2px !important;
+    font-size: 14px !important;
+    margin: 5px auto !important;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.socials {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0 8px 0;
+    padding: 0;
+}
+
+.socials li {
+    margin: 0 8px;
+}
+
+.socials a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.socials a i {
+    font-size: 24px;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+}
+
+.socials a:hover {
+    color: #E97957;
+    transform: translateY(-3px);
+}
+
+.socials a:hover i {
+    filter: drop-shadow(0 0 8px rgba(233, 121, 87, 0.6));
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+    .card.text-center {
+        padding: 30px 25px !important;
     }
 
-    .qr_container{
-      width: 35%;
+    .card-header h1 {
+        font-size: 2.5rem !important;
+    }
+
+    .join_heading {
+        font-size: 2rem !important;
+    }
+
+    .qr_container {
+        min-width: 180px;
+    }
+
+    .card-text {
+        font-size: 22px !important;
+        padding: 20px 30px !important;
+    }
+
+    #timer {
+        font-size: 28px !important;
     }
 }
 
-
-  @media (max-width: 600px) {
-		.footer-content p {
-			font-size: 1.2rem;
-		}
-
-    .join_container{
-      flex-direction: column;
-    }
-  
-    .qr_container{
-      width: 43%;
-      margin-left: 0;
-      margin-top: 2rem;
+@media (max-width: 600px) {
+    .card.text-center {
+        padding: 25px 20px !important;
     }
 
-    .join_heading{
-      font-size: 2.5rem;
-
+    .card-header h1 {
+        font-size: 2rem !important;
+        letter-spacing: 2px;
     }
 
-	}
-
-	
-    </style>
-
-<style> 
-
-input[type=submit] {
-      background: -webkit-gradient(linear,left bottom, left top,from(#000000),to(#262626));
-      background: -webkit-linear-gradient(bottom,#000000,#262626);
-      background: -moz-linear-gradient(bottom,#000000,#262626);
-      background: -o-linear-gradient(bottom,#000000,#262626);
-      background: linear-gradient(0deg,#000000,#262626);
-      backdrop-filter: blur(10px);
-      padding: 5px 10px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .4);
+    .join_container {
+        flex-direction: column;
+        gap: 20px;
     }
-    </style>
 
-<div class="card text-center" style="background: rgba(1, 2, 3,0.4); padding: 30px 30px ;">
-    <div class="card-header" >
-        <h1 style="color: white; font-family: 'Fast Hand', sans-serif;" class="text-center">{{team.name}}</h1>
+    .qr_container {
+        min-width: 60%;
+    }
+
+    .join_heading {
+        font-size: 1.8rem !important;
+    }
+
+    .card-text {
+        font-size: 18px !important;
+        padding: 15px 20px !important;
+        letter-spacing: 2px !important;
+    }
+
+    #timer {
+        font-size: 22px !important;
+    }
+
+    .col-lg-6 h2 {
+        font-size: 1.5rem !important;
+    }
+
+    .footer-content p {
+        font-size: 12px !important;
+    }
+
+    .socials a i {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .card-header h1 {
+        font-size: 1.7rem !important;
+    }
+
+    .join_heading {
+        font-size: 1.5rem !important;
+    }
+
+    .card-text {
+        font-size: 16px !important;
+        padding: 12px 15px !important;
+    }
+
+    #timer {
+        font-size: 20px !important;
+    }
+}
+</style>
+
+<div class="rain"></div>
+
+<div class="card text-center">
+    <div class="card-header">
+        <h1 class="text-center">{{team.name}}</h1>
 
         {% if wait %}
-
         <div>
+            <p class="card-text" id="timer"></p>
 
-			<p class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;padding-left: 10px;padding-right: 10px;visibility: visible;" id="timer">
-			</p>
+            <div style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif; visibility: visible;">
+                <h1 class="join_heading">Join the official Whatsapp group of REChase</h1>
 
-      <div style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif; padding-left: 10px;padding-right: 10px;visibility: visible;">
-        <h1 class="join_heading">Join the official Whatsapp group of REChase</h1>
+                <div class="join_container">
+                    <a href="https://chat.whatsapp.com/BuO9Cc5jK2A6urv8nutEIO" target="_blank">
+                        Click to Join 
+                        <i class="fa-brands fa-whatsapp fa-2x" style="margin-left: 0.4em;"></i>
+                    </a>
 
-        <div class="join_container" style="display: flex;justify-content: center;align-items: center;flex-wrap: wrap;">
-
-         
-
-          <a style="padding:1em;color: white;background: transparent;text-decoration: none;font-weight: 800;border-radius: 10px;font-size: 1.2em;border: 1px solid white;display: flex;align-items: center;justify-content: center;" href="https://chat.whatsapp.com/BuO9Cc5jK2A6urv8nutEIO" target="_blank">
-
-            Click to Join 
-            <i class="fa-brands fa-whatsapp fa-2x" style="margin-left: 0.4em;"></i>
-          
-          </a>
-          
-
-
-          <div class="qr_container">
-            <span>Scan to Join</span>
-            
-            <img class="join_grp_img" src="{% static 'teams/images/whatsapp_QR2.jpg' %}" alt="QR"> 
-
-          </div> 
-
+                    <div class="qr_container">
+                        <span>Scan to Join</span>
+                        <img class="join_grp_img" src="{% static 'teams/images/whatsapp_QR2.jpg' %}" alt="QR"> 
+                    </div> 
+                </div>
+            </div>
         </div>
-
-
-      </div>
-
-      </div>
-
         
-		{% elif finish %}
-			<p class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif; padding-left: 10px;padding-right: 10px;visibility: visible;">
-				REChase Completed <a style="text-decoration: none; color:white" href="{% url 'teams:scoreboard' %}">!! Visit Leaderboard  !!</a>
-			</p>
-		{% elif started %}
-			<p class="card-text" style="color: white; letter-spacing: 2px; font-family: 'Audiowide', sans-serif; padding-left: 10px;padding-right: 10px;visibility: visible;">
-				<a style="padding:6px; color: white; background:#E97957; text-decoration: none; font-weight: 800; border-radius: 10px;" href="{% url 'teams:get-level' %}">Play</a>
-			</p> 
-		{% endif %}
-
-    {% if applicants %}
-            <h2 style="color: white; font-family: 'Audiowide', sans-serif;" class="text-center">Team Join Request</h2>
-                {% for applicant in applicants %}
-                <h3 style="color: white; font-family: 'Orbitron', sans-serif;" class="text-center">
-                        <form method="post" action="{% url 'teams:accept-teammate' %}">
-                            {% csrf_token %}
-                                {{ applicant.name }} ( {{ applicant.email }} )
-                                
-                            <input type="hidden" name="ID" value="{{ applicant.id }}"/>
-                            <input style="background:#E97957; color:white;font-family: 'Orbitron', sans-serif;" type="submit" name="verdict" value="Accept" >
-                            <input style="background:#E97957; color:white;font-family: 'Orbitron', sans-serif;" type="submit" name="verdict" value="Reject" >
-                        </form>
-                    </h3>
-                {% endfor %}
+        {% elif finish %}
+        <p class="card-text">
+            REChase Completed <a style="text-decoration: none; color:white" href="{% url 'teams:scoreboard' %}">!! Visit Leaderboard !!</a>
+        </p>
+        
+        {% elif started %}
+        <p class="card-text" style="color: white;">
+            <a href="{% url 'teams:get-level' %}">Play</a>
+        </p> 
         {% endif %}
 
-
-        <!-- <h2 style="color: white;" class="text-center"><a style="padding:6px; color: white; background:rgb(150, 3, 3); text-decoration: none; font-weight: 800; border-radius: 10px;" href="{% url 'teams:home' %}">Play</a></h2> -->
-        <br>
-        <div  class="row" >
-            <div class="col-lg-6 mar" style="margin-bottom: 10px;">
-                <h2 style="color: white; font-family: 'Audiowide', sans-serif;" class="text-center">Team Code: {{team.code}}</h2>
-            
-                {% comment %} <h2 style="color: white; font-family: 'Audiowide', sans-serif;" class="text-center">Score: {{team.score}}</h2> {% endcomment %}
+        {% if applicants %}
+        <h2 class="text-center">Team Join Request</h2>
+        {% for applicant in applicants %}
+        <h3 class="text-center">
+            <form method="post" action="{% url 'teams:accept-teammate' %}">
+                {% csrf_token %}
+                {{ applicant.name }} ( {{ applicant.email }} )
                 
-                {% comment %} <h2 style="color: white; font-family: 'Audiowide', sans-serif;" class="text-center">Current level:
-                {% if  team.current_level > max_level  %}
-                    {{ max_level }}
-                {% else %}
-                    {{ team.current_level }}
-                {% endif %}
-                </h2> {% endcomment %}
-            </div>
-            <div class="col-lg-6 mar" style="margin-bottom: 10px;">
-                <h2 style="color: white; font-family: 'Audiowide', sans-serif;" class="text-center">Team Members</h2>
-                {% for player in players %}
-                    <h2 style="color: white;font-family: 'Audiowide', sans-serif;" class="text-center">{{forloop.counter}}. {{player}}</h2>
-                    {% endfor %}
-            </div>
-            </div>
-        <br>
+                <input type="hidden" name="ID" value="{{ applicant.id }}"/>
+                <input type="submit" name="verdict" value="Accept">
+                <input type="submit" name="verdict" value="Reject">
+            </form>
+        </h3>
+        {% endfor %}
+        {% endif %}
 
-       {# <a style="color: white;" class="text-center" href="{% url 'teams:leaveTeam' %}">Leave team.</a>#}
-        
-  </div>
-  </div>
-  <div style="height: 100px;"></div>
-  <footer >
+        <br>
+        <div class="row">
+            <div class="col-lg-6 mar">
+                <h2 class="text-center">Team Code: {{team.code}}</h2>
+            </div>
+            <div class="col-lg-6 mar">
+                <h2 class="text-center">Team Members</h2>
+                {% for player in players %}
+                <h2 style="color: rgba(255, 255, 255, 0.9); font-family: 'Orbitron', sans-serif; font-size: 1.2rem; margin: 10px 0;" class="text-center">
+                    {{forloop.counter}}. {{player}}
+                </h2>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+
+<div style="height: 100px;"></div>
+
+<footer>
     <div class="footer-content">
-      <p style="
-      text-shadow: none;
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 2px;
-      margin-top:5px;
-    ">Developed by: RECursion (Team Aavishkar)</p>
+        <p>Developed by: RECursion (Team Aavishkar)</p>
     </div>
     <div class="socials">
-      <li>
-        <a href="https://www.facebook.com/arhn.nitd" target="blank">
-          <i
-            style="height: 30px; width: auto; border: none"
-            class="fab fa-facebook-square"
-          ></i
-        ></a>
-  
-        
-        
-  
-        <a href="https://www.instagram.com/arhn.nitd/" target="blank">
-          <i
-            style="height: 35px; width: auto; border: none"
-            class="fab fa-instagram"
-          ></i
-        ></a>
-  
-        {% comment %} <a href="https://www.recursionnitd.in/" target="blank"
-          ><img
-            style="height: 30px; width: auto; border: none;margin:0px 2.3px;"
-            src="{% static 'teams/images/REC_logo.png' %}"
-        /></a> {% endcomment %}
-  
-        
-  
-        <a
-				href="https://www.linkedin.com/company/aarohan-nit-durgapur/"
-				target="blank"
-			>
-          <i
-            style="height: 35px; width: auto; border: none"
-            class="fab fa-linkedin"
-          ></i
-        ></a>
-  
-      </li>
+        <li>
+            <a href="https://www.facebook.com/arhn.nitd" target="blank">
+                <i class="fab fa-facebook-square"></i>
+            </a>
+            
+            <a href="https://www.instagram.com/arhn.nitd/" target="blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            
+            <a href="https://www.linkedin.com/company/aarohan-nit-durgapur/" target="blank">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </li>
     </div>
-  
-  </footer>
+</footer>
 
-  <script>
-	var countDownDate = new Date({{ start_time|date:"U" }} * 1000);  
-	var now = new Date({{ cur_time|date:"U" }} * 1000);
-	var increment = 1000;
-	
-	var distance = countDownDate - now;
-	var days = 0;
-	var hours = 0;
-	var minutes = 0;
-	var seconds = 0;
+<script>
+var countDownDate = new Date({{ start_time|date:"U" }} * 1000);  
+var now = new Date({{ cur_time|date:"U" }} * 1000);
+var increment = 1000;
 
-	var x = setInterval(function() {
-	
-	  days = Math.floor(distance / (1000 * 60 * 60 * 24));
-	  hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-	  minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-	  seconds = Math.floor((distance % (1000 * 60)) / 1000);
-	
-	  document.getElementById("timer").innerHTML = days + "d " + hours + "h "
-	  + minutes + "m " + seconds + "s ";
-	
-	  if (distance < 0) {
-		clearInterval(x);
-		document.getElementById("timer").innerHTML = '<a style="text-decoration: none; color:white"> REChase is LIVE now !!</a>';
-	  }
+var distance = countDownDate - now;
+var days = 0;
+var hours = 0;
+var minutes = 0;
+var seconds = 0;
 
+var x = setInterval(function() {
+    days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-	  distance-=1000;
+    document.getElementById("timer").innerHTML = days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ";
 
-	//   console.log(distance,seconds)
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("timer").innerHTML = 'REChase is LIVE now !!';
+    }
 
-	}, 1000);
-	</script>
+    distance -= 1000;
+}, 1000);
+</script>
+
 {% endblock %}

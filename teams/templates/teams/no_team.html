@@ -1,130 +1,358 @@
 {% include 'teams/base_bootstrap.html' %}
 {% load static %}
 {% block content %}
-  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
- <script src="https://kit.fontawesome.com/a076d05399.js"></script>
- <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
 
- <style>
-  .container{
-  padding-top: 5vh;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+<style>
+@import url(//db.onlinewebfonts.com/c/f3258385782c4c96aa24fe8b5d5f9782?family=Old+English+Text+MT);
 
-}
-.container .box{
-  /* backdrop-filter: blur(5px); */
-  position: relative;
-  width: 500px;
-  height: 400px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /*webkit-box-reflect:below 15px linear-gradient(transparent,transparent,rgba(0,0,0,.2));*/
+/* Custom Font */
+@font-face {
+    font-family: KTech2;
+    src: url("{% static 'teams/images/ktech.ttf' %}") format("truetype");
 }
 
-.container .box:before{
-  background: rgba(1, 2, 3,0.6);
-  content: '';
-  position: absolute;
-  top:0;
-  left:0;
-  width: 100%;
-  height: 100%;
-  /* border:4px solid #fff;
-   background:rgba(225,225,225,.1);
-  filter: url(#wavy); */
-  border: 4px groove transparent;
-  border-radius:5%;
-}
-.container .box .content{
-position:absolute;
-padding: 20px;
-text-align: center;
-transition: 0.5s;
-}
-.container .box:after{
-content: '';
-position: absolute;
-top:0;
-left:0;
-width:0%;
-height: 100%;
-/* border: 4px solid #fff;
-background:rgba(225,225,225,.1);
-border-right: none;
-filter: url(#wavy); */
+/* Global Styles */
+body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
-.container .box h1{
-  font-family: 'MedievalSharp', cursive;
-  font-size: 4rem;
-  font-weight: bold;
-  color: #fff;
-
-}
-.container .box p{
-color: #fff
-}
-
-.container .box .form{
-  margin-top: 2rem;
-}
-
-.container .box .content{
- padding-left: 10%;
+/* Rain Animation Background */
+.rain {
+    background-image: url("{% static 'teams/images/rain.png' %}");
+    animation: rain 10s linear infinite;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
 }
 
-
-
-
-#subject{
-
-  padding-right:10% ;
+@keyframes rain {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 20% 100%;
+    }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Metrophobic&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Niconne&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
-
-
-
+/* Main Container */
 .main-wrapper {
-position: absolute;
-margin-top: 100px;
-  width: 100%;
-  height: 100%;
-  left :0!important;
-  top:0!important;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
 
+.container {
+    max-width: 1000px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+/* Message Box Styling */
+.message-box {
+    background: rgba(233, 121, 87, 0.15);
+    border: 2px solid rgba(233, 121, 87, 0.5);
+    border-radius: 16px;
+    padding: 20px 30px;
+    margin-bottom: 40px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    box-shadow: 
+        0 8px 32px rgba(233, 121, 87, 0.25),
+        inset 0 2px 8px rgba(255, 255, 255, 0.05);
+    animation: messageGlow 2s ease-in-out infinite;
+}
+
+.message-box p {
+    color: #fff;
+    letter-spacing: 2px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    margin: 0;
+    text-shadow: 0 0 15px rgba(233, 121, 87, 0.6);
+}
+
+@keyframes messageGlow {
+    0%, 100% {
+        box-shadow: 
+            0 8px 32px rgba(233, 121, 87, 0.25),
+            inset 0 2px 8px rgba(255, 255, 255, 0.05);
+    }
+    50% {
+        box-shadow: 
+            0 12px 40px rgba(233, 121, 87, 0.4),
+            inset 0 2px 10px rgba(255, 255, 255, 0.08);
+    }
+}
+
+/* Team Options Grid */
+.team-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Team Box Styling */
+.team-box {
+    position: relative;
+    background: rgba(15, 15, 25, 0.85);
+    border: 2px solid rgba(233, 121, 87, 0.3);
+    border-radius: 20px;
+    padding: 60px 40px;
+    backdrop-filter: blur(15px);
+    box-shadow: 
+        0 8px 32px rgba(233, 121, 87, 0.15),
+        0 0 60px rgba(233, 121, 87, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    text-align: center;
+}
+
+.team-box::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #E97957, #D63629, #E97957);
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.team-box:hover::before {
+    opacity: 0.3;
+}
+
+.team-box:hover {
+    transform: translateY(-8px);
+    border-color: rgba(233, 121, 87, 0.6);
+    box-shadow: 
+        0 16px 48px rgba(233, 121, 87, 0.3),
+        0 0 80px rgba(233, 121, 87, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Icon Styling */
+.team-icon {
+    font-size: 80px;
+    color: #E97957;
+    margin-bottom: 30px;
+    text-shadow: 
+        0 0 20px rgba(233, 121, 87, 0.6),
+        0 0 40px rgba(233, 121, 87, 0.3);
+    animation: iconFloat 3s ease-in-out infinite;
+    display: block;
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.team-box:hover .team-icon {
+    transform: scale(1.1);
+    text-shadow: 
+        0 0 30px rgba(233, 121, 87, 0.8),
+        0 0 60px rgba(233, 121, 87, 0.5);
+}
+
+/* Title Styling */
+.team-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: 
+        0 0 20px rgba(233, 121, 87, 0.5),
+        0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.team-box:hover .team-title {
+    color: #ff8a6b;
+    text-shadow: 
+        0 0 30px rgba(233, 121, 87, 0.8),
+        0 0 60px rgba(233, 121, 87, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Link Styling */
+.team-box a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Decorative Elements */
+.team-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #E97957, transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.team-box:hover::after {
+    transform: scaleX(1);
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .team-options {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .team-box {
+        padding: 50px 30px;
+    }
+    
+    .team-icon {
+        font-size: 70px;
+    }
+    
+    .team-title {
+        font-size: 32px;
+        letter-spacing: 3px;
+    }
+    
+    .message-box p {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-wrapper {
+        padding: 30px 15px;
+    }
+    
+    .team-box {
+        padding: 40px 25px;
+    }
+    
+    .team-icon {
+        font-size: 60px;
+        margin-bottom: 25px;
+    }
+    
+    .team-title {
+        font-size: 28px;
+        letter-spacing: 2px;
+    }
+    
+    .message-box {
+        padding: 18px 25px;
+    }
+    
+    .message-box p {
+        font-size: 16px;
+        letter-spacing: 1.5px;
+    }
+}
+
+@media (max-width: 450px) {
+    .team-box {
+        padding: 35px 20px;
+    }
+    
+    .team-icon {
+        font-size: 50px;
+    }
+    
+    .team-title {
+        font-size: 24px;
+    }
+    
+    .message-box p {
+        font-size: 14px;
+    }
+}
+
+/* Smooth Animations */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fade In Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.team-options {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.message-box {
+    animation: fadeInUp 0.6s ease forwards;
 }
 </style>
 
-<div class="container">
-  <div class="box">
-    <div class="content">
-      {% if sent %}
-      <p style="color: white; letter-spacing: 2px; font-family: 'Orbitron', sans-serif;font-size:20px;">
-        Request sent !! Ask team creator to reload team page!!
-      </p>
+<div class="rain"></div>
+
+<div class="main-wrapper">
+    <div class="container">
+        {% if sent %}
+        <div class="message-box">
+            <p>Request sent! Ask team creator to reload team page!</p>
+        </div>
         {% endif %}
-      <h1 style="text-align: center;">
-        <a  style="text-decoration: none ; color: #fff;font-size: 35px;     font-family: 'orbitron', sans-serif !important;"   href="{% url 'teams:create-team' %}">Create team</a>
-      </h1>
-        <br>
-      <h1 style="text-align: center;">
-        <a style="text-decoration: none ; color: #fff;font-size: 35px;    font-family: 'orbitron', sans-serif !important;" href="{% url 'teams:join-team' %}">Join team</a>
-      </h1>
+        
+        <div class="team-options">
+            <div class="team-box">
+                <a href="{% url 'teams:create-team' %}">
+                    <span class="team-icon">⚡</span>
+                    <h1 class="team-title">Create Team</h1>
+                </a>
+            </div>
+            
+            <div class="team-box">
+                <a href="{% url 'teams:join-team' %}">
+                    <span class="team-icon">🚀</span>
+                    <h1 class="team-title">Join Team</h1>
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-
-
 
 {% endblock %}

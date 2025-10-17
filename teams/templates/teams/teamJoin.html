@@ -1,193 +1,565 @@
-
 {% extends 'teams/base_bootstrap.html' %}
-
 {% load static %}
 {% block content %}
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+<style>
+@import url(//db.onlinewebfonts.com/c/f3258385782c4c96aa24fe8b5d5f9782?family=Old+English+Text+MT);
 
-        .container {
-            padding-top: 5vh;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+/* Custom Font */
+@font-face {
+    font-family: KTech2;
+    src: url("{% static 'teams/images/ktech.ttf' %}") format("truetype");
+}
 
-        }
-
-        .container .box {
-            /* backdrop-filter: blur(5px); */
+/* Global Styles */
+body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+    min-height: 100vh;
     position: relative;
-    width: 500px;
-    height: 400px;
-    color: #010203;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*webkit-box-reflect:below 15px linear-gradient(transparent,transparent,rgba(0,0,0,.2));*/
-  }
-  /* .container .box:hover{
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
 
-  } */
-  .container .box:before{
-    background: rgba(1, 2, 3,0.6);
+/* Rain Animation Background */
+.rain {
+    background-image: url("{% static 'teams/images/rain.png' %}");
+    animation: rain 10s linear infinite;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+@keyframes rain {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 20% 100%;
+    }
+}
+
+/* Floating Particles */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #E97957;
+    border-radius: 50%;
+    opacity: 0.6;
+    box-shadow: 0 0 10px rgba(233, 121, 87, 0.8);
+    animation: floatParticle 15s infinite ease-in-out;
+}
+
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+.particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+.particle:nth-child(4) { left: 40%; animation-delay: 1s; }
+.particle:nth-child(5) { left: 50%; animation-delay: 3s; }
+.particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+.particle:nth-child(7) { left: 70%; animation-delay: 2.5s; }
+.particle:nth-child(8) { left: 80%; animation-delay: 4.5s; }
+.particle:nth-child(9) { left: 90%; animation-delay: 1.5s; }
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Main Wrapper */
+.main-wrapper {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    padding-top: 100px;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+/* Form Box */
+.form-box {
+    background: rgba(15, 15, 25, 0.9);
+    border: 2px solid rgba(233, 121, 87, 0.4);
+    border-radius: 24px;
+    padding: 50px 40px;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 8px 32px rgba(233, 121, 87, 0.2),
+        0 0 60px rgba(233, 121, 87, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.form-box::before {
     content: '';
     position: absolute;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100%;
-    /* border:4px solid #fff;
-     background:rgba(225,225,225,.1);
-    filter: url(#wavy); */
-    border: 4px groove transparent;
-    border-radius:5%;
-  }
-
-.container .box .content{
-  position:absolute;
-  text-align: center;
-  transition: 0.5s;
-}
-.container .box:after{
-  content: '';
-  position: absolute;
-  top:0;
-  left:0;
-  width:0%;
-  height: 100%;
-  /* border: 4px solid #fff;
-  background:rgba(225,225,225,.1);
-  border-right: none;
-  filter: url(#wavy); */
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(233, 121, 87, 0.1), transparent);
+    animation: rotateBg 8s linear infinite;
 }
 
-.container .box h1{
-    font-family: 'MedievalSharp', cursive;
-    font-size: 4rem;
-    font-weight: bold;
+@keyframes rotateBg {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header Section */
+.form-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.form-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: iconFloat 3s ease-in-out infinite;
+    display: inline-block;
+    filter: drop-shadow(0 0 20px rgba(233, 121, 87, 0.6));
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(-5deg);
+    }
+    75% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+}
+
+.form-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
     color: #fff;
-
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    text-shadow: 
+        0 0 20px rgba(233, 121, 87, 0.6),
+        0 0 40px rgba(233, 121, 87, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.5);
+    animation: titleGlow 3s ease-in-out infinite;
 }
-.container .box p{
-  color: #fff
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 
+            0 0 20px rgba(233, 121, 87, 0.6),
+            0 0 40px rgba(233, 121, 87, 0.3),
+            0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        text-shadow: 
+            0 0 30px rgba(233, 121, 87, 0.8),
+            0 0 60px rgba(233, 121, 87, 0.5),
+            0 4px 12px rgba(0, 0, 0, 0.6);
+    }
 }
 
-.container .box .form{
-    margin-top: 2rem;
+.form-subtitle {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
-input[type=submit] 
-{
-    background: -webkit-gradient(linear,left bottom, left top,from(#000000),to(#262626));
-    background: -webkit-linear-gradient(bottom,#000000,#262626);
-    background: -moz-linear-gradient(bottom,#000000,#262626);
-    background: -o-linear-gradient(bottom,#000000,#262626);
-    background: linear-gradient(0deg,#000000,#262626);"
-    color: blue;
-    backdrop-filter: blur(10px);
+/* Error/Info Messages */
+.message-box {
+    background: rgba(233, 121, 87, 0.15);
+    border: 2px solid rgba(233, 121, 87, 0.5);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    animation: messageSlide 0.5s ease forwards;
+    position: relative;
+    z-index: 1;
+}
 
-    padding: 25px 105px;
-    border: none;
-    border-radius: 10px;
+.message-box.error {
+    background: rgba(220, 53, 69, 0.15);
+    border-color: rgba(220, 53, 69, 0.5);
+}
+
+.message-box p {
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Styling */
+.form-content {
+    position: relative;
+    z-index: 1;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.form-label {
+    font-family: 'Orbitron', sans-serif;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+    font-weight: 600;
+}
+
+.form-input {
+    width: 100%;
+    padding: 18px 24px;
+    background: rgba(20, 20, 30, 0.8);
+    border: 2px solid rgba(233, 121, 87, 0.3);
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    letter-spacing: 4px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #E97957;
+    background: rgba(25, 25, 35, 0.9);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(233, 121, 87, 0.3),
+        0 0 40px rgba(233, 121, 87, 0.1);
+    transform: scale(1.02);
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 2px;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    padding: 18px 0;
+    background: linear-gradient(135deg, #E97957 0%, #D63629 100%);
+    border: 2px solid #E97957;
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .4);
-
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 4px 20px rgba(233, 121, 87, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
 }
 
-input[type=text], select, textarea {
-  width: 700px;
-  padding: 12px;
-  border: 4px solid #fff;
-  border-radius: 10px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
-
-  color: #fff;
-  background: -webkit-gradient(linear,left bottom, left top,from(#000000),to(#262626));
-  background: -webkit-linear-gradient(bottom,#000000,#262626);
-  background: -moz-linear-gradient(bottom,#000000,#262626);
-  background: -o-linear-gradient(bottom,#000000,#262626);
-  background: linear-gradient(0deg,#000000,#262626);
-  backdrop-filter: blur(10px);
-}
-
-@media only screen and (max-width: 600px)
-{
-  .container{
-    padding-top: 100px;
-  }
-  .container .box{
-    width:90%!important;
-
-  }
-  .container .box .content{
-    font-size: 15px;
-
-  }
-}
-
-
-
-
-.main-wrapper {
-  position: absolute;
-  margin-top: 100px;
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
     width: 100%;
     height: 100%;
-    left :0!important;
-    top:0!important;
-
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
 }
 
-
-@media (max-width: 500px)
-{
- .main-wrapper{
-  margin-top: 70px;
- }
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 30px rgba(233, 121, 87, 0.6),
+        0 0 50px rgba(233, 121, 87, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #ff8a6b 0%, #E97957 100%);
 }
 
+.submit-btn:hover::before {
+    left: 100%;
+}
 
+.submit-btn:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 2px 15px rgba(233, 121, 87, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
 
+/* Decorative Elements */
+.form-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #E97957, transparent);
+    animation: lineGlow 3s ease-in-out infinite;
+    z-index: 1;
+}
 
+@keyframes lineGlow {
+    0%, 100% {
+        opacity: 0.3;
+        width: 80%;
+    }
+    50% {
+        opacity: 0.8;
+        width: 90%;
+    }
+}
 
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-wrapper {
+        padding-top: 80px;
+    }
+    
+    .form-box {
+        padding: 40px 30px;
+    }
+    
+    .form-icon {
+        font-size: 70px;
+    }
+    
+    .form-title {
+        font-size: 36px;
+        letter-spacing: 4px;
+    }
+    
+    .form-subtitle {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-wrapper {
+        padding: 60px 15px 40px;
+    }
+    
+    .form-box {
+        padding: 35px 25px;
+        border-radius: 20px;
+    }
+    
+    .form-icon {
+        font-size: 60px;
+        margin-bottom: 15px;
+    }
+    
+    .form-title {
+        font-size: 32px;
+        letter-spacing: 3px;
+    }
+    
+    .form-subtitle {
+        font-size: 11px;
+        letter-spacing: 2px;
+    }
+    
+    .form-input {
+        padding: 16px 20px;
+        font-size: 16px;
+        letter-spacing: 3px;
+    }
+    
+    .submit-btn {
+        padding: 16px 0;
+        font-size: 16px;
+        letter-spacing: 3px;
+    }
+    
+    .message-box p {
+        font-size: 14px;
+    }
+    
+    .particles {
+        display: none;
+    }
+}
+
+@media (max-width: 450px) {
+    .form-box {
+        padding: 30px 20px;
+    }
+    
+    .form-icon {
+        font-size: 50px;
+    }
+    
+    .form-title {
+        font-size: 28px;
+        letter-spacing: 2px;
+    }
+    
+    .form-subtitle {
+        font-size: 10px;
+    }
+    
+    .form-input {
+        padding: 14px 18px;
+        font-size: 14px;
+    }
+    
+    .submit-btn {
+        padding: 14px 0;
+        font-size: 14px;
+    }
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
 </style>
 
-<div class="container">
+<div class="rain"></div>
 
-    <div class="box">
-      <div class="content">
-
-
-           {% if wrong_code %}
-        <p>{{ wrong_code }}</p>
-    {% endif %}
-    {% if team_full %}
-        <h1>{{ team_full }}</h1>
-    {% endif %}
-        <form action="" method="post">
-         {% csrf_token %}
-
-            <h1 style="font-family:Orbitron">Enter Team code</h1>
-            <label style="color: white" for="id_code">CODE:</label>
-            <input style="color: #fff;padding:5px;height:40px;width:280px;border: 2px solid #fff;" type="text"
-                   name="code" id="id_code" required>
-            <br>
-            <input type="submit" value="Submit"
-                   style="font-family: 'Orbitron', sans-serif;color: #fff;padding:5px;height:40px;width:100px;border: 2px solid #fff;">
-        </form>
-      </div>
-    </div>
+<div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
 </div>
 
+<div class="main-wrapper">
+    <div class="container">
+        <div class="form-box">
+            <div class="form-header">
+                <div class="form-icon">🚀</div>
+                <h1 class="form-title">Join Team</h1>
+                <p class="form-subtitle">Enter your team code below</p>
+            </div>
 
+            {% if wrong_code %}
+            <div class="message-box error">
+                <p>{{ wrong_code }}</p>
+            </div>
+            {% endif %}
+
+            {% if team_full %}
+            <div class="message-box error">
+                <p>{{ team_full }}</p>
+            </div>
+            {% endif %}
+
+            <div class="form-content">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="id_code">Team Code</label>
+                        <input 
+                            class="form-input" 
+                            type="text"
+                            name="code" 
+                            id="id_code" 
+                            placeholder="XXXX-XXXX"
+                            required
+                            autocomplete="off"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        Enter Team
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
