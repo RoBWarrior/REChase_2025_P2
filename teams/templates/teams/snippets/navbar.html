@@ -300,82 +300,94 @@
 				}
 			}
 
-			@media (max-width: 868px) {
-				.icon {
-					display: block;
-				}
+			/* Replace the @media (max-width: 868px) section with this updated version */
 
-				.navbar .menu-list {
-					position: fixed;
-					height: 100vh;
-					width: 100%;
-					max-width: 420px;
-					left: -100%;
-					top: 0;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					align-items: center;
-					gap: 20px;
-					padding: 60px 30px;
-					background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(1, 183, 249, 0.1) 100%);
-					backdrop-filter: blur(20px);
-					box-shadow: 4px 0 30px rgba(1, 183, 249, 0.2);
-					border-right: 1px solid rgba(1, 183, 249, 0.3);
-					transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-					overflow-y: auto;
-				}
+@media (max-width: 868px) {
+	.icon {
+		display: block;
+	}
 
-				.navbar.show .menu-list {
-					left: 0;
-				}
+	.navbar .menu-list {
+		position: fixed;
+		height: 100vh;
+		width: 100%;
+		max-width: 420px;
+		left: -100%;
+		top: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		padding: 60px 30px;
+		background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(1, 183, 249, 0.1) 100%);
+		backdrop-filter: blur(20px);
+		box-shadow: 4px 0 30px rgba(1, 183, 249, 0.2);
+		border-right: 1px solid rgba(1, 183, 249, 0.3);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		overflow-y: auto;
+	}
 
-				.navbar .menu-list li {
-					width: 100%;
-					text-align: center;
-					opacity: 0;
-					transform: translateX(-30px);
-					animation: slideInLeft 0.4s ease forwards;
-				}
+	.navbar.show .menu-list {
+		left: 0;
+	}
 
-				.navbar.show .menu-list li {
-					animation: slideInLeft 0.4s ease forwards;
-				}
+	.navbar .menu-list li {
+		width: 100%;
+		text-align: center;
+		opacity: 0;
+		transform: translateX(-30px);
+		animation: slideInLeft 0.4s ease forwards;
+	}
 
-				.navbar .menu-list li:nth-child(1) { animation-delay: 0.1s; }
-				.navbar .menu-list li:nth-child(2) { animation-delay: 0.2s; }
-				.navbar .menu-list li:nth-child(3) { animation-delay: 0.3s; }
-				.navbar .menu-list li:nth-child(4) { animation-delay: 0.4s; }
-				.navbar .menu-list li:nth-child(5) { animation-delay: 0.5s; }
+	.navbar.show .menu-list li {
+		animation: slideInLeft 0.4s ease forwards;
+	}
 
-				@keyframes slideInLeft {
-					to {
-						opacity: 1;
-						transform: translateX(0);
-					}
-				}
+	.navbar .menu-list li:nth-child(1) { animation-delay: 0.1s; }
+	.navbar .menu-list li:nth-child(2) { animation-delay: 0.2s; }
+	.navbar .menu-list li:nth-child(3) { animation-delay: 0.3s; }
+	.navbar .menu-list li:nth-child(4) { animation-delay: 0.4s; }
+	.navbar .menu-list li:nth-child(5) { animation-delay: 0.5s; }
 
-				.navbar .menu-list li a,
-				.logout-link {
-					font-size: 20px;
-					padding: 15px 30px;
-					width: 100%;
-					display: block;
-					border: 1px solid rgba(1, 183, 249, 0.2);
-					background: rgba(1, 183, 249, 0.05);
-				}
+	@keyframes slideInLeft {
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
 
-				.navbar .menu-list li a:hover,
-				.logout-link:hover {
-					transform: scale(1.02);
-				}
+	/* Apply same styling to both regular links and logout button */
+	.navbar .menu-list li a,
+	.navbar .menu-list .logout-link {
+		font-size: 20px;
+		padding: 15px 30px;
+		width: 100%;
+		display: block;
+		border: 1px solid rgba(1, 183, 249, 0.2);
+		background: rgba(1, 183, 249, 0.05);
+	}
 
-				/* Hide cursors on mobile */
-				.cursor,
-				.cursor2 {
-					display: none;
-				}
-			}
+	.navbar .menu-list li a:hover,
+	.navbar .menu-list .logout-link:hover {
+		transform: scale(1.02);
+	}
+
+	/* Ensure logout form takes full width */
+	.navbar .menu-list .logout-form {
+		width: 100%;
+	}
+
+	.navbar .menu-list .logout-item {
+		width: 100%;
+	}
+
+	/* Hide cursors on mobile */
+	.cursor,
+	.cursor2 {
+		display: none;
+	}
+}
 
 			@media (max-width: 420px) {
 				.navbar .menu-list {
